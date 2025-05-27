@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WELLNEST - Admin Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(40, 40, 40, 0.7);
+      --primary: #007bff;
+      --primary-dark: #0056b3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+      padding: 20px;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Bubble background */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      text-align: center;
+      padding: 20px 0;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 28px;
+      z-index: 10;
+      user-select: none;
+    }
+
+    .login-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      margin-top: 120px;
+      color: var(--text-light);
+      z-index: 5;
+    }
+
+    .login-card h2 {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      color: var(--primary-dark);
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 2px solid var(--primary);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--primary-dark);
+      box-shadow: 0 0 6px var(--primary-dark);
+    }
+
+    button.btn {
+      width: 100%;
+      background-color: var(--primary);
+      border: none;
+      padding: 12px;
+      border-radius: 14px;
+      color: var(--text-dark);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    button.btn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 15px 0;
+      color: var(--text-dark);
+      text-align: center;
+      font-weight: 600;
+      user-select: none;
+      z-index: 10;
+    }
+
+    /* Responsive */
+    @media (max-width: 450px) {
+      .login-card {
+        padding: 20px 15px;
+        margin-top: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bubbles" aria-hidden="true"></div>
+
+  <header>
+    WellNest Admin
+  </header>
+
+  <main class="login-card" role="main" aria-labelledby="login-title">
+    <h2 id="login-title">Admin Login</h2>
+    <form id="admin-login-form" autocomplete="off" aria-describedby="login-instructions">
+      <div class="form-group">
+        <label for="admin-username">Username</label>
+        <input type="text" id="admin-username" name="admin-username" required autocomplete="username" />
+      </div>
+      <div class="form-group">
+        <label for="admin-password">Password</label>
+        <input type="password" id="admin-password" name="admin-password" required autocomplete="current-password" />
+      </div>
+      <button type="submit" class="btn" aria-label="Log In as Admin">Log In</button>
+    </form>
+  </main>
+
+  <footer>
+    &copy; 2025 Wellnest
+  </footer>
+
+  <script>
+    // Generate bubbles dynamically
+    const bubblesContainer = document.querySelector('.bubbles');
+    for (let i = 0; i < 25; i++) {
+      const span = document.createElement('span');
+      span.style.left = `${Math.random() * 100}%`;
+      const size = 10 + Math.random() * 20;
+      span.style.width = `${size}px`;
+      span.style.height = `${size}px`;
+      span.style.animationDuration = `${6 + Math.random() * 5}s`;
+      span.style.animationDelay = `${Math.random() * 5}s`;
+      bubblesContainer.appendChild(span);
+    }
+
+    // Admin login logic
+    document.getElementById('admin-login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById('admin-username').value.trim();
+      const password = document.getElementById('admin-password').value.trim();
+
+      // Hardcoded credentials
+      const validUsername = 'admin';
+      const validPassword = 'admin123';
+
+      if (username === validUsername && password === validPassword) {
+        alert('Admin login successful');
+        localStorage.setItem("role", "admin");
+        window.location.href = "admboard.html"; // Update to your dashboard URL
+      } else {
+        alert('Invalid admin credentials');
+      }
+    });
+  </script>
+
+</body>
+</html>

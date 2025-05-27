@@ -1,0 +1,485 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | Wellnest</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+  --primary: #4a90e2;
+  --bg: #f8f9fc;
+  --text: #333;
+  --card-bg: #ffffff;
+  --border-radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: var(--primary);
+  color: white;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav a {
+  margin-left: 1.5rem;
+  color: white;
+  text-decoration: none;
+}
+
+.nav a.active {
+  font-weight: bold;
+  border-bottom: 2px solid white;
+}
+
+.about-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.feature-card {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 500px;
+}
+
+.feature-card h2 {
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.feature-card ul {
+  padding-left: 1.2rem;
+}
+
+.team {
+  text-align: center;
+}
+
+.team-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.member-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  width: 200px;
+}
+
+.member-card img {
+  width: 100%;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #eaeef3;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+}
+
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">Wellnest</div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      
+      <a href="about.html" class="active">About</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <main class="about-container">
+    <section class="intro">
+      <h1>About Wellnest</h1>
+      <p>Wellnest is your personal companion for emotional wellness and mental clarity. Our platform connects you with professional counsellors, making it easy to schedule sessions and prioritize your mental health.</p>
+    </section>
+
+    <section class="features">
+      <div class="feature-card">
+        <h2>Our Mission</h2>
+        <p>To make mental health care accessible, confidential, and stigma-free through seamless digital experiences.</p>
+      </div>
+      <div class="feature-card">
+        <h2>Why Wellnest?</h2>
+        <ul>
+          <li>Verified professional counsellors</li>
+          <li>Simple, secure session booking</li>
+          <li>User-friendly and intuitive interface</li>
+          <li>Confidential and encrypted data handling</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="team">
+      <h2>Meet the Team</h2>
+      <div class="team-members">
+        <div class="member-card">
+          
+          <h3>Sam </h3>
+          
+        </div>
+        <div class="member-card">
+          
+          <h3>Subash</h3>
+          
+        </div>
+        <div class="member-card">
+          
+          <h3>Kaarthick</h3>
+          
+        </div>
+        <div class="member-card">
+          
+          <h3>Faizudeen</h3>
+          
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Wellnest. All rights reserved.</p>
+  </footer>
+
+  <script >
+    // Optional JavaScript logic (e.g., animation or dynamic load)
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('About page loaded');
+});
+
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | Wellnest</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    :root {
+      --primary: #4a90e2;
+      --bg-gradient: linear-gradient(-45deg, #a2ccff, #c6e6ff, #a2ccff, #c6e6ff);
+      --text-light: #fff;
+      --text-dark: #333;
+      --card-bg: rgba(255, 255, 255, 0.15);
+      --border-radius: 16px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: var(--text-dark);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position:0% 50%;}
+      50% {background-position:100% 50%;}
+      100% {background-position:0% 50%;}
+    }
+
+    /* Floating bubbles */
+    .bubbles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .bubbles span {
+      position: absolute;
+      bottom: -40px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 12s linear infinite;
+      opacity: 0.7;
+    }
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(0.5); opacity: 0; }
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: var(--primary);
+      color: var(--text-light);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+    }
+    .nav a {
+      margin-left: 1.5rem;
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: border-bottom 0.3s ease;
+      padding-bottom: 3px;
+    }
+    .nav a.active,
+    .nav a:hover {
+      border-bottom: 2px solid var(--text-light);
+      font-weight: 600;
+    }
+
+    /* Main container */
+    .about-container {
+      padding: 2rem 1rem 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .intro h1 {
+      font-weight: 700;
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .intro p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      max-width: 650px;
+      margin: 0 auto;
+      color: var(--text-dark);
+    }
+
+    /* Features section */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      padding: 1.8rem 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 460px;
+      color: var(--text-dark);
+    }
+    .feature-card h2 {
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-weight: 600;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 6px;
+    }
+    .feature-card ul {
+      padding-left: 1.4rem;
+      list-style: disc;
+    }
+    .feature-card ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    /* Team section */
+    .team {
+      text-align: center;
+      margin-top: 2rem;
+      color: var(--text-dark);
+    }
+    .team h2 {
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    .team-members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .member-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 1rem 1.5rem;
+      width: 200px;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 1.2rem;
+      background-color: rgba(255,255,255,0.25);
+      color: var(--text-dark);
+      font-size: 0.9rem;
+      margin-top: 4rem;
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+      .feature-card, .member-card {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bubbles"></div>
+
+  <header class="header">
+    <div class="logo">Wellnest</div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <main class="about-container">
+    <section class="intro">
+      <h1>About Wellnest</h1>
+      <p>Wellnest is your personal companion for emotional wellness and mental clarity. Our platform connects you with professional counsellors, making it easy to schedule sessions and prioritize your mental health.</p>
+    </section>
+
+    <section class="features">
+      <div class="feature-card">
+        <h2>Our Mission</h2>
+        <p>To make mental health care accessible, confidential, and stigma-free through seamless digital experiences.</p>
+      </div>
+      <div class="feature-card">
+        <h2>Why Wellnest?</h2>
+        <ul>
+          <li>Verified professional counsellors</li>
+          <li>Simple, secure session booking</li>
+          <li>User-friendly and intuitive interface</li>
+          <li>Confidential and encrypted data handling</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="team">
+      <h2>Meet the Team</h2>
+      <div class="team-members">
+        <div class="member-card">
+          <h3>Sam</h3>
+        </div>
+        <div class="member-card">
+          <h3>Subash</h3>
+        </div>
+        <div class="member-card">
+          <h3>Kaarthick</h3>
+        </div>
+        <div class="member-card">
+          <h3>Faizudeen</h3>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Wellnest. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Generate floating bubbles
+    const bubblesContainer = document.querySelector('.bubbles');
+    for(let i = 0; i < 20; i++){
+      const bubble = document.createElement('span');
+      bubble.style.left = `${Math.random() * 100}%`;
+      const size = 10 + Math.random() * 20;
+      bubble.style.width = `${size}px`;
+      bubble.style.height = `${size}px`;
+      bubble.style.animationDuration = `${8 + Math.random() * 8}s`;
+      bubble.style.animationDelay = `${Math.random() * 5}s`;
+      bubblesContainer.appendChild(bubble);
+    }
+  </script>
+</body>
+</html>

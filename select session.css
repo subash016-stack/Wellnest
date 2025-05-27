@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 30px;
+}
+
+.container {
+   
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 50px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(147, 211, 253, 0.199);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #0f2eb4;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+.availability {
+    background-color: #edffff;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+button {
+    padding: 12px 18px;
+    background-color: #008cff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #65b5da;
+}
+
+button:disabled {
+    background-color: #f1dbab;
+    cursor: not-allowed;
+}
+/* Other styles */
+
+button.cancel-btn {
+    padding: 5px 5px;
+    background-color: #bb1111;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor:pointer;
+    margin-right: 20px;
+    margin-left: 10px;
+    width:fit-content;
+    
+}
+
+button.cancel-btn:hover {
+    background-color: #f36262;
+}
+
+.hidden {
+    display: none;
+}
+
+#slots-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 40px;
+}
+
+.slot {
+    padding: 15px;
+    background-color: #e0ffce;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    border: 2px solid transparent;
+}
+
+.slot:hover {
+    background-color: #ffffff;
+}
+
+.slot.booked {
+    background-color: #f3dbdb;
+    cursor: pointer;
+}
+
+.slot.selected {
+    border: 2px solid black;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #777;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form div {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+input, textarea {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: vertical;
+    height: 120px;
+}
+
+#confirmation-message {
+    color: green;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+}

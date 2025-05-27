@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Appointments - Wellnest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --accent: #007bff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      color: #000;
+      min-height: 100vh;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 1;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .appointment {
+      background: rgba(255, 255, 255, 0.3);
+      padding: 16px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      border-left: 5px solid var(--accent);
+    }
+
+    .appointment:hover {
+      transform: scale(1.01);
+    }
+
+    .appointment p {
+      margin-bottom: 8px;
+    }
+
+    .appointment strong {
+      color: var(--accent);
+    }
+
+    .no-data {
+      text-align: center;
+      font-style: italic;
+      color: #333;
+      margin-top: 30px;
+    }
+
+    .start-session-btn {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    .start-session-btn:hover {
+      background-color: #005bb5;
+    }
+
+    /* Floating Bubbles */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Bubbles -->
+  <div class="bubbles">
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+
+  <div class="container">
+    <h1>My Appointments</h1>
+    <div id="appointments-list">
+      <!-- Bookings will be loaded here -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const counsellorUsername = localStorage.getItem("username");
+
+      if (!counsellorUsername) {
+        alert("You are not logged in.");
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:3000/api/counsellor-bookings?counsellor=${counsellorUsername}`);
+        const appointments = await res.json();
+        renderAppointments(appointments);
+      } catch (err) {
+        console.error("Error loading appointments:", err);
+        document.getElementById("appointments-list").innerHTML = "<p class='no-data'>Failed to load appointments.</p>";
+      }
+    });
+
+    function startSession(username, time) {
+      const url = `video_session.html?user=${encodeURIComponent(username)}&time=${encodeURIComponent(time)}`;
+      window.location.href = url;
+    }
+
+    function renderAppointments(appointments) {
+  const list = document.getElementById("appointments-list");
+  list.innerHTML = "";
+
+  if (!appointments.length) {
+    list.innerHTML = "<p class='no-data'>No appointments found.</p>";
+    return;
+  }
+
+  appointments.forEach(booking => {
+    const div = document.createElement("div");
+    div.className = "appointment";
+    div.innerHTML = `
+      <p><strong>User:</strong> ${booking.username}</p>
+      <p><strong>Email:</strong> ${booking.email}</p>
+      <p><strong>Mobile:</strong> ${booking.mobile}</p>
+      <p><strong>Time:</strong> ${booking.time}</p>
+      <p><strong>Message:</strong> ${booking.message || 'N/A'}</p>
+      <p><strong>Status:</strong> ${booking.status}</p>
+      ${booking.status.toLowerCase() !== "cancelled" ? 
+        `<button class="start-session-btn" onclick="startSession('${booking.username}', '${booking.time}')">Start Session</button>` 
+        : ""}
+    `;
+    list.appendChild(div);
+  });
+}
+  </script>
+</body>
+</html>

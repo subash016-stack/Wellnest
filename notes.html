@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🧠 Counsellor Session Notes - Wellnest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(40, 40, 40, 0.7);
+      --primary-blue: #007bff;
+      --bubble-color: rgba(255, 255, 255, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      color: var(--text-light);
+      padding: 40px 20px;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+      color: var(--text-dark);
+      text-shadow: 0 0 6px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+   #notes-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  gap: 30px;
+  position: relative;
+  z-index: 2;
+  max-height: 70vh;        
+  overflow-y: auto;        
+  padding-right: 10px;     
+}
+
+
+    .user-section {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 25px 30px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.15);
+      color: var(--text-dark);
+      transition: transform 0.2s ease;
+    }
+
+    .user-section:hover {
+      transform: scale(1.02);
+    }
+
+    .user-title {
+      font-size: 1.7rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--primary-blue);
+      border-bottom: 2px solid var(--primary-blue);
+      padding-bottom: 8px;
+    }
+
+    .note {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      padding: 15px 20px;
+      margin: 15px 0;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+      position: relative;
+      color: #000;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .note::before {
+      content: "📝";
+      position: absolute;
+      top: 15px;
+      left: -35px;
+      font-size: 1.3rem;
+    }
+
+    .timestamp {
+      font-size: 0.85rem;
+      color: rgba(0,0,0,0.6);
+      margin-top: 10px;
+      text-align: right;
+      font-style: italic;
+    }
+
+    /* Bubble styles */
+    .bubble {
+      position: absolute;
+      background: var(--bubble-color);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation-timing-function: linear;
+      pointer-events: none;
+      filter: drop-shadow(0 0 6px rgba(255 255 255 / 0.4));
+      will-change: transform;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .user-title {
+        font-size: 1.4rem;
+      }
+      .note {
+        font-size: 0.95rem;
+        padding: 12px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Counsellor Session Notes</h1>
+  <div id="notes-container">Loading notes...</div>
+
+  <script>
+    // Bubble creation and animation logic
+    const bubbleCount = 25;
+    const bubbles = [];
+
+    function createBubble() {
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+
+      // random size 15px - 60px
+      const size = Math.random() * 45 + 15;
+      bubble.style.width = size + 'px';
+      bubble.style.height = size + 'px';
+
+      // random initial horizontal position
+      bubble.style.left = Math.random() * window.innerWidth + 'px';
+
+      // set initial vertical position just below the viewport
+      bubble.style.top = window.innerHeight + size + 'px';
+
+      // random animation duration (time to float upwards)
+      bubble.dataset.duration = (Math.random() * 20 + 15).toFixed(2);
+
+      // random horizontal movement speed and direction
+      bubble.dataset.hSpeed = (Math.random() * 20 - 10).toFixed(2);
+
+      document.body.appendChild(bubble);
+      return bubble;
+    }
+
+    function animateBubbles() {
+      bubbles.forEach(bubble => {
+        let top = parseFloat(bubble.style.top);
+        let left = parseFloat(bubble.style.left);
+        const size = parseFloat(bubble.style.width);
+
+        // vertical speed (pixels per frame)
+        const speed = window.innerHeight / bubble.dataset.duration / 60;
+
+        top -= speed; // move upward
+
+        // horizontal oscillation
+        const hSpeed = bubble.dataset.hSpeed;
+        left += Math.sin(top / 30) * 0.5 + (hSpeed / 30);
+
+        if (top + size < 0) {
+          // Reset to bottom with new random horizontal position and duration
+          top = window.innerHeight + size;
+          left = Math.random() * window.innerWidth;
+          bubble.dataset.duration = (Math.random() * 20 + 15).toFixed(2);
+          bubble.dataset.hSpeed = (Math.random() * 20 - 10).toFixed(2);
+        }
+
+        bubble.style.top = top + 'px';
+        bubble.style.left = left + 'px';
+      });
+
+      requestAnimationFrame(animateBubbles);
+    }
+
+    // Initialize bubbles
+    for (let i = 0; i < bubbleCount; i++) {
+      const b = createBubble();
+
+      // randomize starting vertical position so they start scattered
+      b.style.top = (Math.random() * window.innerHeight) + 'px';
+
+      bubbles.push(b);
+    }
+
+    animateBubbles();
+
+    // Session notes loading
+    const counsellor = localStorage.getItem("username");
+
+    if (!counsellor) {
+      document.getElementById('notes-container').innerText = "No counsellor logged in.";
+    } else {
+      fetch(`http://localhost:3000/api/session-notes?counsellor=${encodeURIComponent(counsellor)}`)
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('notes-container');
+          container.innerHTML = "";
+
+          if (!data.length) {
+            container.innerText = "No session notes found.";
+            return;
+          }
+
+          // Group notes by username
+          const grouped = {};
+          data.forEach(note => {
+            if (!grouped[note.username]) grouped[note.username] = [];
+            grouped[note.username].push(note);
+          });
+
+          for (const username in grouped) {
+            const section = document.createElement("div");
+            section.className = "user-section";
+
+            const title = document.createElement("div");
+            title.className = "user-title";
+            title.textContent = `🧍 User: ${username}`;
+            section.appendChild(title);
+
+            grouped[username].forEach(note => {
+              const noteDiv = document.createElement("div");
+              noteDiv.className = "note";
+              noteDiv.innerHTML = `
+                <div>${note.notes}</div>
+                <div class="timestamp">🕒 ${new Date(note.createdAt).toLocaleString()}</div>
+              `;
+              section.appendChild(noteDiv);
+            });
+
+            container.appendChild(section);
+          }
+        })
+        .catch(err => {
+          console.error("Error loading notes:", err);
+          document.getElementById('notes-container').innerText = "❌ Failed to load notes.";
+        });
+    }
+  </script>
+</body>
+</html>

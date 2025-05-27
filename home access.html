@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shelter Home Access - Wellnest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --primary: #1e88e5;
+      --text-dark: #002744;
+      --card-bg: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      padding: 20px;
+      color: var(--text-dark);
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    .container {
+      position: relative;
+      max-width: 900px;
+      margin: auto;
+      z-index: 1;
+    }
+
+    .title {
+      background-color: var(--primary);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      font-size: 26px;
+    }
+
+    .section {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border-left: 6px solid var(--primary);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .section h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .title {
+        font-size: 22px;
+        padding: 15px;
+      }
+
+      .section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Bubbles -->
+  <div class="bubbles">
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+
+  <div class="container">
+    <h2 class="title">Shelter Home Access</h2>
+
+    <div class="section">
+      <h3>What Are Shelter Homes?</h3>
+      <p>
+        Shelter homes are safe spaces provided by the government or NGOs for individuals—especially women and children—facing violence, abuse, or homelessness.
+        These facilities offer temporary accommodation, protection, and support services like legal aid and counseling.
+      </p>
+    </div>
+
+    <div class="section">
+      <h3>Legal Rights & Government Support</h3>
+      <ul>
+        <li>Under laws like the <em>Protection of Women from Domestic Violence Act, 2005</em>, victims have the right to safe shelter.</li>
+        <li><strong>One Stop Centers (OSCs)</strong> and <strong>Swadhar Greh</strong> schemes support women in distress with shelter and legal aid.</li>
+        <li>You can request protection and shelter through local authorities or national helplines.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>How to Access Shelter Homes</h3>
+      <ul>
+        <li>Call <strong>Women’s Helpline 181</strong> or the national emergency number <strong>112</strong>.</li>
+        <li>Visit your <strong>nearest police station</strong> or <strong>District Protection Officer (DPO)</strong>.</li>
+        <li>Contact verified NGOs that operate shelter homes and crisis centers.</li>
+        <li>Approach the <strong>Legal Services Authority (LSA)</strong> office in your district.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>Additional Services Available</h3>
+      <ul>
+        <li>Legal support and assistance in filing complaints.</li>
+        <li>Medical care and trauma counseling.</li>
+        <li>Vocational training and rehabilitation programs.</li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>

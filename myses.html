@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Counselling Sessions - Wellnest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --primary-blue: #007bff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-border: rgba(255, 255, 255, 0.3);
+      --text-light: #000;
+      --btn-bg: #007bff;
+      --btn-hover-bg: #0056b3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      color: var(--text-light);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      text-align: center;
+      padding: 40px 20px 20px;
+      color: var(--primary-blue);
+      font-weight: 600;
+      font-size: 2.5rem;
+      z-index: 10;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #session-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .session-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--card-border);
+      border-left: 6px solid var(--primary-blue);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      color: var(--text-light);
+      transition: transform 0.3s ease;
+    }
+
+    .session-card:hover {
+      transform: translateY(-7px);
+    }
+
+    .session-card h3 {
+      color: var(--primary-blue);
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .session-card p {
+      margin: 10px 0;
+      font-weight: 400;
+    }
+
+    .session-card hr {
+      margin: 15px 0;
+      border: none;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .start-session-btn, .back-btn {
+      background: var(--btn-bg);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      display: inline-block;
+    }
+
+    .start-session-btn:hover, .back-btn:hover {
+      background: var(--btn-hover-bg);
+    }
+
+    .btn-wrapper {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    /* Bubble background */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      #session-list {
+        grid-template-columns: 1fr;
+      }
+
+      .session-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bubbles -->
+  <div class="bubbles" aria-hidden="true">
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+
+  <div class="container">
+    <h1>My Booked Sessions</h1>
+    <div class="btn-wrapper">
+      <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+    </div>
+
+    <div id="session-list">
+      <!-- Sessions will load here -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("username");
+
+      if (!username) {
+        alert("You must be logged in to view your sessions.");
+        return;
+      }
+
+      fetch(`http://localhost:3000/api/user-bookings?username=${username}`)
+        .then(res => res.json())
+        .then(data => {
+          if (!Array.isArray(data) || data.length === 0) {
+            document.getElementById("session-list").innerHTML = "<p>You have not booked any sessions yet.</p>";
+            return;
+          }
+          renderSessions(data);
+        })
+        .catch(err => {
+          console.error("Error fetching sessions:", err);
+          document.getElementById("session-list").innerHTML = "<p>Error loading sessions.</p>";
+        });
+    });
+
+    function renderSessions(sessions) {
+      const list = document.getElementById("session-list");
+      list.innerHTML = '';
+
+      sessions.forEach(session => {
+        const div = document.createElement("div");
+        div.className = "session-card";
+
+        const status = (session.status || "").toLowerCase().trim();
+
+        let cardHTML = `
+          <h3>${session.counsellor}</h3>
+          <p><strong>Time:</strong> ${session.time}</p>
+          <p><strong>Status:</strong> ${session.status}</p>
+          <p><strong>Message:</strong> ${session.message || 'N/A'}</p>
+          <hr>
+        `;
+
+        if (status !== "cancelled") {
+          cardHTML += `<button class="start-session-btn" onclick="startSession('${session._id}')">Start Session</button>`;
+        }
+
+        div.innerHTML = cardHTML;
+        list.appendChild(div);
+      });
+    }
+
+    function startSession(sessionId) {
+      window.location.href = `video_session.html?sessionId=${sessionId}`;
+    }
+
+    function goBack() {
+  const role = localStorage.getItem("role");
+
+  if (role === "counsellor") {
+    window.location.href = "cdboard.html"; 
+  } else if (role === "user") {
+    window.location.href = "dboard.html"; 
+  } else {
+    alert("Unknown role. Redirecting to login.");
+    window.location.href = "login.html";
+  }
+}
+  </script>
+</body>
+</html>

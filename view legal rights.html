@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Legal Rights for Women - Wellnest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(40, 40, 40, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      color: #fff;
+    }
+
+    header h1 {
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    .search-box {
+      margin-top: 15px;
+      width: 80%;
+      max-width: 500px;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      padding: 15px;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.2);
+      margin: 10px auto;
+      border-radius: 12px;
+      max-width: 90%;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #007bff;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 30px auto;
+      padding: 30px;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      color: var(--text-light);
+    }
+
+    .card h2 {
+      font-size: 24px;
+      color: #007bff;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .card ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .card li {
+      margin-bottom: 10px;
+    }
+
+    .card a {
+      color: #007bff;
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    /* Bubble background */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bubbles -->
+  <div class="bubbles">
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+
+  <header>
+    <h1>Legal Rights for Women</h1>
+    <input type="text" class="search-box" placeholder="Search legal topics...">
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#workplace"><i class="fas fa-briefcase"></i> Workplace</a></li>
+      <li><a href="#domestic"><i class="fas fa-home"></i> Domestic</a></li>
+      <li><a href="#resources"><i class="fas fa-info-circle"></i> Resources</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="card" id="workplace">
+      <h2>Workplace Rights</h2>
+      <ul>
+        <li>Equal pay for equal work</li>
+        <li><a href="maternity.html">Maternity leave benefits</a></li>
+        <li>Protection against harassment</li>
+        <li>No gender discrimination</li>
+      </ul>
+    </div>
+
+    <div class="card" id="domestic">
+      <h2>Domestic Safety</h2>
+      <ul>
+        <li>Protection from domestic violence</li>
+        <li>Emergency helpline numbers</li>
+        <li><a href="leguide.html">Legal support services</a></li>
+        <li>Shelter home access</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Wellnest. All rights reserved.
+  </footer>
+
+</body>
+</html>

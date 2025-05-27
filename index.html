@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WellNest Official</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="img/favicon.png" type="image/png">
+  <link rel="stylesheet" href="wnstyle.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #14646e;
+      overflow: hidden;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://img.freepik.com/premium-photo/blue-watercolor-abstract-background_3590-37.jpg?semt=ais_hybrid&w=740');
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      opacity: 1;
+    }
+
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 151, 167, 0.95);
+      padding: 1rem 2rem;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .title h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .tags {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .tags li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: background 0.3s;
+      border-radius: 5px;
+    }
+
+    .tags li a:hover {
+      background-color: #007c91;
+    }
+
+    .use .btn {
+      text-decoration: none;
+      margin-left: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      border: 2px solid white;
+    }
+
+    .login {
+      background-color: white;
+      color: #0097a7;
+    }
+
+    .signup {
+      background-color: transparent;
+      color: white;
+    }
+
+    .login:hover,
+    .signup:hover {
+      background-color: #ffffff;
+      color: #0097a7;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 30px 10px;
+      background: rgba(239, 253, 255, 0.915);
+      border-radius: 20px;
+      margin: 4rem auto;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      width: 180px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-content h2 {
+      font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #1c889b;
+    }
+
+    .hero-content p {
+      font-size: clamp(1rem, 1.2vw + 0.5rem, 1.2rem);
+      margin-bottom: 2rem;
+      color: #444;
+    }
+
+    .cta-button {
+      position: relative;
+      z-index: 2;
+      padding: 0.75rem 1.5rem;
+      background-color: #007c91;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #004d5a;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: white;
+      background: rgba(0, 0, 0, 0.3);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .use {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bubble background -->
+  <div class="bubbles">
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        span.style.position = "absolute";
+        span.style.bottom = "-50px";
+        span.style.background = "rgba(255,255,255,0.3)";
+        span.style.borderRadius = "50%";
+        span.style.animation = "rise 10s linear infinite";
+        if (i % 2 === 0) {
+          span.style.background = "rgba(255,255,255,0.6)";
+        }
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="title">
+      <h1>WELLNEST</h1>
+    </div>
+    <nav class="navbar">
+      <ul class="tags">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="admlogin.html">Admin</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="#">License</a></li>
+      </ul>
+      <div class="use">
+        <a href="login.html" class="btn login">LOGIN</a>
+        <a href="wreg.html" class="btn signup">SIGNUP</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Hero Section -->
+  <main>
+    <section class="hero"> 
+      <div class="hero-content"> 
+        <img src="http://drive.google.com/thumbnail?id=1-R7uVz_hLhiVqGjcpaHuq_BgSmMUWy81&sz=s800" alt="WellNest Logo" class="logo">
+        <h2>Empowering Women & Children Through Legal Awareness</h2>
+        <p>Join WellNest today to learn your rights and access support.</p>
+        <a href="wreg.html" class="cta-button">Get Started</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Wellnest. All rights reserved.
+  </footer>
+
+  <!-- Optional interactivity -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector(".login").addEventListener("click", () => {
+        console.log("Login button clicked");
+      });
+      document.querySelector(".signup").addEventListener("click", () => {
+        console.log("Signup button clicked");
+      });
+    });
+  </script>
+</body>
+</html>

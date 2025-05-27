@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Profile - Wellnest</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #fceabb, #f8b500);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .option {
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 150px;
+            animation: zoomIn 0.6s ease;
+        }
+
+        .option img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .option p {
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .option.selected {
+            border-color: #ff9800;
+            background-color: #fff8e1;
+        }
+
+        .proceed-button {
+            margin-top: 40px;
+            padding: 12px 30px;
+            font-size: 16px;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .proceed-button:hover {
+            background-color: #e68900;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+
+    <script>
+        let selectedProfile = null;
+
+        function selectProfile(profile) {
+            selectedProfile = profile;
+
+            // Remove selection from all options
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Highlight the selected option
+            const chosen = document.querySelector(`.option[onclick*="${profile}"]`);
+            if (chosen) chosen.classList.add('selected');
+        }
+
+        function proceed() {
+            if (!selectedProfile) {
+                alert("Please select a profile before proceeding.");
+                return;
+            }
+
+            let page = "";
+            switch (selectedProfile) {
+                case 'female':
+                    page = "wreg.html";
+                    break;
+                case 'child':
+                    page = "wreg.html";
+                    break;
+                case 'professional':
+                    page = "creg.html";
+                    break;
+                default:
+                    alert("Invalid selection.");
+                    return;
+            }
+
+            window.location.href = page;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose Your Profile</h1>
+
+        <div class="options">
+            <div class="option" onclick="selectProfile('female')">
+                <img src="Imgs/female.png" alt="Female">
+                <p>Female</p>
+            </div>
+            <div class="option" onclick="selectProfile('child')">
+                <img src="Imgs/children.png" alt="Child">
+                <p>Child</p>
+            </div>
+            <div class="option" onclick="selectProfile('professional')">
+                <img src="Imgs/proff1.jpeg" alt="Professional">
+                <p>Professional</p>
+            </div>
+        </div>
+
+        <button class="proceed-button" onclick="proceed()">Proceed</button>
+    </div>
+</body>
+</html>

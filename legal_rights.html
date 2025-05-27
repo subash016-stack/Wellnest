@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Explore Legal Rights - Wellnest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --text-light: #000;
+      --primary-blue: #007bff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--text-light);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 900px;
+      z-index: 1;
+      position: relative;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 2.8rem;
+      margin-bottom: 40px;
+      color: var(--primary-blue);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      width: 280px;
+      max-width: 90%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      user-select: none;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px var(--primary-blue);
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+    }
+
+    .card h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+
+    /* Bubble background */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .card {
+        width: 90%;
+        height: auto;
+      }
+
+      .card img {
+        height: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bubble background -->
+  <div class="bubbles">
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+
+  <div class="container">
+    <h1>Explore Legal Rights</h1> 
+    <div class="card-container">
+      <div class="card" id="women-rights" tabindex="0" role="button" aria-pressed="false" aria-label="Legal Rights for Women">
+        <img src="http://drive.google.com/thumbnail?id=1nwWXug9hfZFxplCvjUYSLpZWljjz8yUV&sz=s800" alt="Women's Rights" />
+        <h2>Legal Rights for Women</h2>  
+      </div>
+      <div class="card" id="child-rights" tabindex="0" role="button" aria-pressed="false" aria-label="Legal Rights for Children">
+        <img src="http://drive.google.com/thumbnail?id=1cePpBPKHzfWZbmn-fDpkZvl8QSUercBM&sz=s800" alt="Children's Rights" />
+        <h2>Legal Rights for Children</h2>  
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('women-rights').addEventListener('click', () => {
+      window.location.href = 'lerights.html';
+    });
+    document.getElementById('child-rights').addEventListener('click', () => {
+      window.location.href = 'lerights_child.html';
+    });
+
+    // Add keyboard accessibility
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

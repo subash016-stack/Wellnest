@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellnest - Counselor Registration</title>
+    <link rel="stylesheet" href="wreg.css">
+</head>
+<body>
+    <div class="registration-container">
+        <h2>Wellnest Counselor Registration</h2>
+        <form action="submit_counselor_registration.php" method="POST">
+
+            <!-- Full Name -->
+            <div class="input-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+
+            <!-- Username -->
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="input-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+
+            <!-- Email Address -->
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="input-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <!-- Qualifications -->
+            <div class="input-group">
+                <label for="qualifications">Professional Qualifications</label>
+                <input type="text" id="qualifications" name="qualifications" required>
+            </div>
+
+            <!-- Graduation -->
+            <div class="input-group">
+                <label for="graduation">Graduation</label>
+                <input type="text" id="graduation" name="graduation" required>
+            </div>
+
+            <!-- Certificate Code or ID -->
+            <div class="input-group">
+                <label for="certificate_id">Certificate Code/ID</label>
+                <input type="text" id="certificate_id" name="certificate_id" required>
+            </div>
+
+            <!-- Experience -->
+            <div class="input-group">
+                <label for="experience">Years of Experience</label>
+                <input type="number" id="experience" name="experience" required>
+            </div>
+
+            <!-- Areas of Expertise -->
+            <div class="input-group">
+                <label for="expertise">Areas of Expertise</label>
+                <textarea id="expertise" name="expertise" required></textarea>
+            </div>
+
+            <!-- Password -->
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="input-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <!-- Areas of Support Counselors Offer -->
+            <div class="input-group">
+                <label for="support_offered">Areas of Support Offered</label>
+                <div>
+                    <input type="checkbox" name="support_offered[]" value="mental_health"> Mental Health Counseling<br>
+                    <input type="checkbox" name="support_offered[]" value="legal"> Legal Guidance<br>
+                    <input type="checkbox" name="support_offered[]" value="physical_safety"> Physical Safety Support<br>
+                    <input type="checkbox" name="support_offered[]" value="counseling"> General Counseling
+                </div>
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div class="input-group">
+                <label>
+                    <input type="checkbox" name="terms" required> I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>

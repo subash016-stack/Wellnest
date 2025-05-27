@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Legal Rights for Children - Wellnest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(40, 40, 40, 0.7);
+      --primary-blue: #007bff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      color: var(--text-light);
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Bubble background */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 80px auto 40px;
+      position: relative;
+      z-index: 1;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 32px;
+      margin-bottom: 30px;
+      color: var(--primary-blue);
+      text-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 30px;
+      margin-bottom: 25px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      color: var(--text-light);
+      cursor: default;
+      transition: background 0.3s ease;
+    }
+
+    .card:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--primary-blue);
+      margin-bottom: 15px;
+      border-bottom: 2px solid var(--primary-blue);
+      padding-bottom: 8px;
+    }
+
+    ul {
+      list-style-type: disc;
+      padding-left: 25px;
+    }
+
+    li {
+      margin-bottom: 12px;
+      color: var(--primary-blue);
+      cursor: pointer;
+      transition: text-decoration 0.3s ease;
+    }
+
+    li:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bubble background -->
+  <div class="bubbles">
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+
+  <div class="container">
+    <h1>Legal Rights for Children</h1>
+
+    <div class="card">
+      <h2 class="section-title">Education Rights</h2>
+      <ul>
+        <li onclick="navigateTo('education.html')">Right to free and compulsory education</li>
+        <li onclick="navigateTo('no-discrimination.html')">No discrimination in schools</li>
+        <li onclick="navigateTo('inclusive-environment.html')">Safe and inclusive learning environment</li>
+        <li onclick="navigateTo('child-labour.html')">Protection from child labor</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Protection Rights</h2>
+      <ul>
+        <li onclick="navigateTo('abuse-neglect.html')">Protection from abuse and neglect</li>
+        <li onclick="navigateTo('legal-aid.html')">Right to legal aid and representation</li>
+        <li onclick="navigateTo('c_helpline.html')">Child helpline access</li>
+        <li onclick="navigateTo('rehabilitation.html')">Rehabilitation and care for affected children</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
+</body>
+</html>

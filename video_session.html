@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Live Counselling Session</title>
+  <link rel="stylesheet" href="session-call.css" />
+  <style>
+    /* Your existing styles */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #dbeafe, #e0f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding-top: 20px;
+      padding-bottom: 40px;
+      overflow-y: auto;
+    }
+
+    .call-container {
+      width: 90%;
+      max-width: 900px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 1rem;
+      background-color: #3b82f6;
+      color: white;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .video-section {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f1f5f9;
+    }
+
+    iframe {
+      width: 100%;
+      height: 70vh;
+      min-height: 400px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .controls {
+      padding: 1rem;
+      text-align: center;
+      background: #f8fafc;
+    }
+
+    #endCall {
+      background-color: #ef4444;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #endCall:hover {
+      background-color: #dc2626;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="call-container">
+    <header>
+      <h1>Live Counselling Session</h1>
+    </header>
+    <div class="video-section">
+      <iframe
+        id="videoFrame"
+        allow="camera; microphone"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+<div
+  id="notesSection"
+  class="hidden"
+  style="padding: 1rem; background: #f9fafb;"
+>
+  <h3>📝 Session Notes</h3>
+  <textarea
+    id="sessionNotes"
+    rows="6"
+    placeholder="Write notes about the session..."
+    style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;"
+  ></textarea>
+  <button
+    id="saveNotes"
+    style="margin-top: 10px; padding: 10px 20px; background-color: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer;"
+  >
+    Save Notes
+  </button>
+</div>
+
+    <div class="controls">
+      <button id="endCall">📞 End Call</button>
+    </div>
+
+    <div
+      id="summaryFeedback"
+      class="hidden"
+      style="padding: 1rem; background: #fff; border-top: 1px solid #ddd;"
+    >
+      <h3>🌟 Rate the Session</h3>
+      <select
+        id="sessionRating"
+        style="margin-bottom: 1rem; padding: 8px; width: 100%;"
+      >
+        <option value="">Select Rating</option>
+        <option>⭐️⭐️⭐️⭐️⭐️ Excellent</option>
+        <option>⭐️⭐️⭐️⭐️ Good</option>
+        <option>⭐️⭐️⭐️ Average</option>
+        <option>⭐️⭐️ Poor</option>
+        <option>⭐️ Very Poor</option>
+      </select>
+
+      <button
+        id="submitFeedback"
+        style="
+          padding: 10px 20px;
+          background-color: #10b981;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        "
+      >
+        Submit Feedback
+      </button>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const videoFrame = document.getElementById("videoFrame");
+  const summaryPanel = document.getElementById("summaryFeedback");
+
+
+  const username = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
+
+  if (!username || !role) {
+    alert("Missing login information. Please log in.");
+    window.location.href = "/login.html";
+    return;
+  }
+
+  // Fetch session room from backend
+  fetch(`http://localhost:3000/api/session-room?username=${encodeURIComponent(username)}`)
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to fetch session.");
+      return res.json();
+    })
+    .then((data) => {
+      if (!data.roomName) {
+        alert("No active session found.");
+        return;
+      }
+      const videoURL = `https://meet.jit.si/${data.roomName}`;
+      videoFrame.src = videoURL;
+    })
+    .catch((err) => {
+      console.error("Session load error:", err);
+      alert("Failed to load session. Please try again.");
+    });
+
+      // Session Timer
+      let startTime = new Date();
+      const timer = document.createElement("div");
+      timer.style =
+        "position:absolute; top:10px; right:20px; font-weight:bold; color:#333;";
+      timer.id = "callTimer";
+      document.querySelector(".call-container").appendChild(timer);
+
+      setInterval(() => {
+        const now = new Date();
+        const elapsed = Math.floor((now - startTime) / 1000);
+        const mins = String(Math.floor(elapsed / 60)).padStart(2, "0");
+        const secs = String(elapsed % 60).padStart(2, "0");
+        timer.innerText = `⏱ ${mins}:${secs}`;
+      }, 1000);
+
+      // End Call Button
+     document.getElementById("endCall").addEventListener("click", () => {
+     if (confirm("Are you sure you want to end the session?")) {
+    videoFrame.style.display = "none";
+    document.querySelector(".video-section").style.display = "none";
+
+    const chatBox = document.getElementById("chatBox");
+    if (chatBox) chatBox.style.display = "none";
+
+    document.getElementById("endCall").style.display = "none";
+    summaryPanel.classList.remove("hidden"); // Show rating panel
+    
+  }
+});
+
+
+      // Simple notes
+if (role === "counsellor") {
+  document.getElementById("notesSection").classList.remove("hidden");
+} else {
+  document.getElementById("chatBox")?.remove(); // Optional cleanup for chat
+}
+
+  document.getElementById("saveNotes").addEventListener("click", () => {
+  const notes = document.getElementById("sessionNotes").value.trim();
+  if (!notes) {
+    alert("Please write some notes before saving.");
+    return;
+  }
+
+  const counsellor = username; // logged-in user is the counsellor
+  const clientUsername = prompt("Enter the username of the client for this session:");
+
+  if (!clientUsername) {
+    alert("Client username is required to save notes.");
+    return;
+  }
+
+  const notePayload = {
+    counsellor,
+    username: clientUsername,
+    notes,
+  };
+
+  fetch("http://localhost:3000/api/session-notes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(notePayload),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to save notes");
+      return res.json();
+    })
+    .then(() => {
+      alert("Notes saved successfully.");
+      document.getElementById("sessionNotes").value = "";
+    })
+    .catch((err) => {
+      console.error("Notes save error:", err);
+      alert("Failed to save notes.");
+    });
+});
+
+
+      // Submit Feedback
+      document
+        .getElementById("submitFeedback")
+        .addEventListener("click", () => {
+          const rating = sessionRating.value;
+          if (!rating) {
+            alert("Please select a rating.");
+            return;
+          }
+          const endTime = new Date().toISOString();
+
+          // Example sessionId could be username + current timestamp or from your booking schema
+          // For simplicity, using username + timestamp
+          const sessionId = `${username}_${Date.now()}`;
+
+          const autoSummary = `Session with ${username} on ${new Date().toLocaleDateString()} lasted for around ${Math.floor(
+            (new Date() - startTime) / 60000
+          )} minutes and was rated "${rating.split(" ")[0]}".`;
+
+          const feedbackData = {
+            username,
+            sessionId,
+            rating,
+            summary: autoSummary,
+            endTime,
+          };
+
+          fetch("http://localhost:3000/api/session-feedback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(feedbackData),
+          })
+            .then((res) => {
+              if (!res.ok) throw new Error("Failed to submit feedback");
+              return res.json();
+            })
+            .then(() => {
+              alert("Feedback submitted successfully!");
+              setTimeout(() => {
+                window.location.href = "myses.html";
+              }, 1000);
+            })
+            .catch((err) => {
+              console.error("Feedback submission error:", err);
+              alert("Failed to submit feedback.");
+            });
+        });
+    });
+  </script>
+</body>
+</html>

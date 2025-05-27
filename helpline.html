@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Helplines for Women and Children - Wellnest</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(40, 40, 40, 0.7);
+      --primary-color: #007bff;
+      --btn-bg: #007bff;
+      --btn-hover-bg: rgba(0, 123, 255, 0.8);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      color: var(--text-light);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Helpline Cards */
+    .helpline-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+
+    .helpline-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
+      padding: 30px;
+      width: 30%;
+      color: var(--text-light);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .helpline-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .helpline-card h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .helpline-card p {
+      font-size: 16px;
+      margin-bottom: 25px;
+      color: var(--text-light);
+      flex-grow: 1;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 5px 0;
+      background-color: var(--btn-bg);
+      color: var(--text-dark);
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      max-width: 200px;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: var(--btn-hover-bg);
+    }
+
+    /* Search Bar */
+    #search-bar {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    #search-bar input {
+      width: 80%;
+      max-width: 600px;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 15px;
+      border: none;
+      outline: none;
+      background: rgba(255,255,255,0.9);
+      color: var(--text-light);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+    }
+
+    #search-bar input:focus {
+      box-shadow: 0 0 12px var(--primary-color);
+      background: #fff;
+    }
+
+    /* Bubbles Background */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .helpline-card {
+        width: 45%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .helpline-card {
+        width: 100%;
+      }
+      body {
+        padding: 20px 10px;
+      }
+      #search-bar input {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bubble Background -->
+  <div class="bubbles" aria-hidden="true"></div>
+
+  <main class="container" role="main" aria-labelledby="helpline-heading">
+    <h2 id="helpline-heading">Important Helplines</h2>
+
+    <section class="helpline-list" aria-live="polite">
+      <article class="helpline-card" data-title="Domestic Violence Support" data-description="If you or someone you know is experiencing domestic violence, support is available.">
+        <h3>Domestic Violence Support</h3>
+        <p>If you or someone you know is experiencing domestic violence, support is available.</p>
+        <a href="tel:+18007997233" class="btn" aria-label="Call Domestic Violence Support Helpline 1 800 799 7233">Call: 1-800-799-7233</a>
+        <a href="https://www.thehotline.org/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Visit Domestic Violence Support Website">Visit Website</a>
+      </article>
+
+      <article class="helpline-card" data-title="Mental Health Support" data-description="Get confidential support for your mental health at any time of day or night.">
+        <h3>Mental Health Support</h3>
+        <p>Get confidential support for your mental health at any time of day or night.</p>
+        <a href="tel:+18002738255" class="btn" aria-label="Call Mental Health Support Helpline 1 800 273 8255">Call: 1-800-273-8255</a>
+        <a href="https://suicidepreventionlifeline.org/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Visit Mental Health Support Website">Visit Website</a>
+      </article>
+
+      <article class="helpline-card" data-title="Child Abuse Support" data-description="If you suspect or are experiencing child abuse, please reach out immediately.">
+        <h3>Child Abuse Support</h3>
+        <p>If you suspect or are experiencing child abuse, please reach out immediately.</p>
+        <a href="tel:+18004224453" class="btn" aria-label="Call Child Abuse Support Helpline 1 800 422 4453">Call: 1-800-422-4453</a>
+        <a href="https://www.childhelp.org/hotline/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Visit Child Abuse Support Website">Visit Website</a>
+      </article>
+
+      <article class="helpline-card" data-title="Women's Legal Assistance" data-description="Get legal advice and support for issues like domestic violence, discrimination, and more.">
+        <h3>Women's Legal Assistance</h3>
+        <p>Get legal advice and support for issues like domestic violence, discrimination, and more.</p>
+        <a href="tel:+18002738255" class="btn" aria-label="Call Women's Legal Assistance Helpline 1 800 273 8255">Call: 1-800-273-8255</a>
+        <a href="https://www.legalservicescorp.org/find-legal-aid/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Visit Women's Legal Assistance Website">Visit Website</a>
+      </article>
+
+      <article class="helpline-card" data-title="Women's Health Resources" data-description="Access comprehensive health services and support for women at any stage of life.">
+        <h3>Women's Health Resources</h3>
+        <p>Access comprehensive health services and support for women at any stage of life.</p>
+        <a href="tel:+18002221747" class="btn" aria-label="Call Women's Health Resources Helpline 1 800 222 1747">Call: 1-800-222-1747</a>
+        <a href="https://www.womenshealth.gov/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Visit Women's Health Resources Website">Visit Website</a>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    // Generate bubbles
+    const bubblesContainer = document.querySelector(".bubbles");
+    for (let i = 0; i < 25; i++) {
+      const span = document.createElement("span");
+      span.style.left = `${Math.random() * 100}%`;
+      const size = 10 + Math.random() * 20;
+      span.style.width = `${size}px`;
+      span.style.height = `${size}px`;
+      span.style.animationDuration = `${6 + Math.random() * 5}s`;
+      span.style.animationDelay = `${Math.random() * 5}s`;
+      bubblesContainer.appendChild(span);
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById("searchInput");
+    const helplineCards = document.querySelectorAll(".helpline-card");
+    const noResultsMessage = document.createElement("p");
+    noResultsMessage.textContent = "No search results found";
+    noResultsMessage.style.color = "#ff4c4c";
+    noResultsMessage.style.fontWeight = "700";
+    noResultsMessage.style.textAlign = "center";
+    noResultsMessage.style.marginTop = "20px";
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      let visibleCount = 0;
+
+      helplineCards.forEach(card => {
+        const title = card.getAttribute("data-title").toLowerCase();
+        const description = card.getAttribute("data-description").toLowerCase();
+        if (title.includes(query) || description.includes(query)) {
+          card.style.display = "flex";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      const helplineList = document.querySelector(".helpline-list");
+      if (visibleCount === 0) {
+        if (!helplineList.contains(noResultsMessage)) {
+          helplineList.appendChild(noResultsMessage);
+        }
+      } else {
+        if (helplineList.contains(noResultsMessage)) {
+          helplineList.removeChild(noResultsMessage);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

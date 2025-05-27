@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin - Manage Users & Counsellors</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f4ff;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 { text-align: center; color: #004080; }
+  .container { max-width: 1200px; margin: auto; }
+  .search-bar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  input[type="text"] {
+    flex-grow: 1;
+    padding: 8px;
+    font-size: 16px;
+  }
+  select {
+    padding: 8px;
+    font-size: 16px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 8px #ccc;
+  }
+  th, td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background: #004080;
+    color: white;
+    user-select: none;
+  }
+  tr:hover {
+    background-color: #e6f0ff;
+  }
+  button {
+    padding: 6px 12px;
+    margin: 0 2px;
+    border: none;
+    background-color: #004080;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+  button.delete {
+    background-color: #cc0000;
+  }
+  button.deactivate {
+    background-color: #ff6600;
+  }
+  button.save {
+    background-color: #007700;
+  }
+  .details {
+    margin-top: 20px;
+    padding: 15px;
+    background: white;
+    box-shadow: 0 0 8px #ccc;
+    display: none;
+  }
+  .details h2 {
+    margin-top: 0;
+  }
+  .form-group {
+    margin-bottom: 10px;
+  }
+  label {
+    display: inline-block;
+    width: 150px;
+    font-weight: bold;
+  }
+  input[type="text"], input[type="email"], select {
+    width: 300px;
+    padding: 6px;
+  }
+  .message {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Manage Our Community</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by name, username or email..." />
+      <select id="roleFilter">
+        <option value="all">All Roles</option>
+        <option value="user">Users</option>
+        <option value="counsellor">Counsellors</option>
+      </select>
+    </div>
+    <table id="usersTable">
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Populated dynamically -->
+      </tbody>
+    </table>
+
+    <div class="details" id="detailsPanel">
+      <h2>Manage Account</h2>
+      <form id="editForm">
+        <div class="form-group">
+          <label for="fullname">Full Name:</label>
+          <input type="text" id="fullname" name="fullname" required />
+        </div>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" readonly />
+        </div>
+        <div class="form-group">
+          <label for="role">Role:</label>
+          <select id="role" name="role" disabled>
+            <option value="user">User</option>
+            <option value="counsellor">Counsellor</option>
+          </select>
+        </div>
+        <div class="form-group" id="qualificationGroup" style="display:none;">
+          <label for="qualification">Qualification:</label>
+          <input type="text" id="qualification" name="qualification" placeholder="Enter qualifications" />
+        </div>
+        <div class="form-group" id="availabilityGroup" style="display:none;">
+          <label for="availability">Availability:</label>
+          <input type="text" id="availability" name="availability" placeholder="Available days/times" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone:</label>
+          <input type="text" id="phone" name="phone" required />
+        </div>
+        <div class="form-group">
+          <label for="activeStatus">Active:</label>
+          <select id="activeStatus" name="activeStatus">
+            <option value="true">Active</option>
+            <option value="false">Deactivated</option>
+          </select>
+        </div>
+        <div>
+          <button type="submit" class="save">Save Changes</button>
+          <button type="button" id="deleteBtn" class="delete">Delete Account</button>
+          <button type="button" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+      <div class="message" id="message"></div>
+    </div>
+  </div>
+
+<script>
+  const API_BASE = "http://localhost:3000/api";
+
+  let users = [];
+  let selectedUserId = null;
+
+  const usersTableBody = document.querySelector("#usersTable tbody");
+  const searchInput = document.getElementById("searchInput");
+  const roleFilter = document.getElementById("roleFilter");
+  const detailsPanel = document.getElementById("detailsPanel");
+  const editForm = document.getElementById("editForm");
+  const messageBox = document.getElementById("message");
+  const deleteBtn = document.getElementById("deleteBtn");
+  const cancelBtn = document.getElementById("cancelBtn");
+
+  const qualificationGroup = document.getElementById("qualificationGroup");
+  const availabilityGroup = document.getElementById("availabilityGroup");
+
+  function renderTable() {
+    const filterText = searchInput.value.toLowerCase();
+    const role = roleFilter.value;
+
+    let filtered = users.filter(user => {
+      const matchRole = role === "all" || user.role === role;
+      const matchSearch = user.fullname.toLowerCase().includes(filterText) ||
+                          user.username.toLowerCase().includes(filterText) ||
+                          user.email.toLowerCase().includes(filterText);
+      return matchRole && matchSearch;
+    });
+
+    usersTableBody.innerHTML = filtered.map(user => `
+      <tr data-id="${user._id}">
+        <td>${user.fullname}</td>
+        <td>${user.username}</td>
+        <td>${user.role}</td>
+        <td>${user.email}</td>
+        <td>${user.phone || ""}</td>
+        <td>
+          <button onclick="viewDetails('${user._id}')">View/Edit</button>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  async function fetchUsers() {
+    try {
+      const res = await fetch(`${API_BASE}/users`);
+      if (!res.ok) throw new Error("Failed to fetch users");
+      users = await res.json();
+
+      // Add default active field if missing (simulate)
+      users = users.map(u => ({ ...u, active: u.active === undefined ? true : u.active }));
+
+      renderTable();
+    } catch (err) {
+      alert("Error loading users: " + err.message);
+    }
+  }
+
+  function viewDetails(userId) {
+    selectedUserId = userId;
+    const user = users.find(u => u._id === userId);
+    if (!user) return alert("User not found");
+
+    // Show details panel
+    detailsPanel.style.display = "block";
+
+    editForm.fullname.value = user.fullname || "";
+    editForm.username.value = user.username || "";
+    editForm.role.value = user.role || "user";
+    editForm.email.value = user.email || "";
+    editForm.phone.value = user.phone || "";
+    editForm.activeStatus.value = user.active ? "true" : "false";
+
+    // Show qualification & availability fields for counsellors only
+    if (user.role === "counsellor") {
+      qualificationGroup.style.display = "block";
+      availabilityGroup.style.display = "block";
+
+      // For demo, we'll use local properties (extend backend for real data)
+      editForm.qualification.value = user.qualification || "";
+      editForm.availability.value = user.availability || "";
+    } else {
+      qualificationGroup.style.display = "none";
+      availabilityGroup.style.display = "none";
+      editForm.qualification.value = "";
+      editForm.availability.value = "";
+    }
+
+    messageBox.textContent = "";
+  }
+
+  editForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!selectedUserId) return;
+
+    const updatedData = {
+      fullname: editForm.fullname.value.trim(),
+      email: editForm.email.value.trim(),
+      phone: editForm.phone.value.trim(),
+      active: editForm.activeStatus.value === "true",
+    };
+
+    // Only counsellors have qualification and availability editable
+    if (editForm.role.value === "counsellor") {
+      updatedData.qualification = editForm.qualification.value.trim();
+      updatedData.availability = editForm.availability.value.trim();
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/user/${selectedUserId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData),
+      });
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to update");
+      }
+      const resData = await res.json();
+
+      // Update local users array
+      const index = users.findIndex(u => u._id === selectedUserId);
+      if (index !== -1) {
+        users[index] = { ...users[index], ...updatedData };
+      }
+
+      renderTable();
+      messageBox.style.color = "green";
+      messageBox.textContent = "User updated successfully!";
+    } catch (err) {
+      messageBox.style.color = "red";
+      messageBox.textContent = "Error: " + err.message;
+    }
+  });
+
+  deleteBtn.addEventListener("click", async () => {
+    if (!selectedUserId) return;
+    if (!confirm("Are you sure you want to delete this account? This action cannot be undone.")) return;
+
+    try {
+      const res = await fetch(`${API_BASE}/user/${selectedUserId}`, { method: "DELETE" });
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to delete user");
+      }
+
+      // Remove from local users array
+      users = users.filter(u => u._id !== selectedUserId);
+      renderTable();
+
+      messageBox.style.color = "green";
+      messageBox.textContent = "User deleted successfully!";
+
+      // Hide details
+      detailsPanel.style.display = "none";
+      selectedUserId = null;
+    } catch (err) {
+      messageBox.style.color = "red";
+      messageBox.textContent = "Error deleting user: " + err.message;
+    }
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    detailsPanel.style.display = "none";
+    selectedUserId = null;
+    messageBox.textContent = "";
+  });
+
+  // Search and filter events
+  searchInput.addEventListener("input", renderTable);
+  roleFilter.addEventListener("change", renderTable);
+
+  // Initialize
+  fetchUsers();
+</script>
+</body>
+</html>

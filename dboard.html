@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wellnest Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(40, 40, 40, 0.7);
+      --primary: #007bff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Bubbles */
+    .bubbles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    header {
+  text-align: center;
+  padding: 40px 20px 30px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  z-index: 1;
+  position: relative;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(0,123,255,0.05));
+  border-radius: 0 0 20px 20px;
+  z-index: -1;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      max-width: 960px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+      z-index: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 30px 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      color: var(--text-light);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0, 123, 255, 0.4);
+    }
+
+    .card img {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 15px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 2px rgba(0, 123, 255, 0.7));
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-dark);
+      padding: 20px 10px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+      z-index: 1;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .card {
+        padding: 25px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bubbles"></div>
+  <script>
+    // Create bubbles dynamically
+    for (let i = 0; i < 25; i++) {
+      const span = document.createElement('span');
+      span.style.left = `${Math.random() * 100}%`;
+      span.style.width = `${10 + Math.random() * 20}px`;
+      span.style.height = span.style.width;
+      span.style.animationDuration = `${6 + Math.random() * 5}s`;
+      span.style.animationDelay = `${Math.random() * 5}s`;
+      document.querySelector(".bubbles").appendChild(span);
+    }
+  </script>
+
+  <header>
+    <h1>Welcome to Wellnest</h1>
+  </header>
+
+ <main>
+  <div class="card" onclick="navigateTo('booking.html')">
+    <img src="https://img.icons8.com/fluency/96/calendar.png" alt="Book Sessions" />
+    <h3>Book Sessions</h3>
+  </div>
+  <div class="card" onclick="navigateTo('myses.html')">
+    <img src="https://img.icons8.com/fluency/96/calendar.png" alt="My Sessions" />
+    <h3>My Sessions</h3>
+  </div>
+  <div class="card" onclick="navigateTo('legal_rights.html')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Legal Rights Icon" />
+    <h3>Legal Rights</h3>
+  </div>
+  <div class="card" onclick="navigateTo('helpline.html')">
+    <img src="https://img.icons8.com/fluency/96/phone.png" alt="Helpline" />
+    <h3>Helpline</h3>
+  </div>
+  <div class="card" onclick="navigateTo('quiz.html')">
+    <img src="https://img.icons8.com/fluency/96/question-mark.png" alt="Quiz" />
+    <h3>Quiz</h3>
+  </div>
+  <div class="card" onclick="navigateTo('profile.html')">
+    <img src="https://img.icons8.com/fluency/96/user-male-circle.png" alt="Profile" />
+    <h3>Profile</h3>
+  </div>
+  <div class="card" onclick="navigateTo('chatbot.html')">
+    <img src="https://img.icons8.com/fluency/96/chatbot.png" alt="Chatbot" />
+    <h3>Legal Guidance</h3>
+  </div>
+  <div class="card" onclick="navigateTo('index.html')">
+    <img src="https://img.icons8.com/fluency/96/exit.png" alt="Logout" />
+    <h3>Logout</h3>
+  </div>
+</main>
+
+  <footer>
+    &copy; 2025 Wellnest
+  </footer>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Right to Free and Compulsory Education - Wellnest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(40, 40, 40, 0.7);
+      --primary-blue: #007bff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      color: var(--text-light);
+      padding: 20px;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 32px;
+      margin-bottom: 40px;
+      color: var(--primary-blue);
+      text-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      color: var(--text-light);
+    }
+
+    .card h2 {
+      font-size: 24px;
+      color: var(--primary-blue);
+      border-bottom: 2px solid var(--primary-blue);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        margin: 30px 20px;
+        padding: 0;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Right to Free and Compulsory Education</h1>
+
+    <div class="card">
+      <h2>Overview</h2>
+      <p>Every child has the right to receive free and compulsory education. This ensures that no child is denied access to basic education due to financial constraints or social barriers.</p>
+    </div>
+
+    <div class="card">
+      <h2>Age Coverage</h2>
+      <p>This right typically applies to children aged 6 to 14, ensuring they complete elementary education without fees or hidden charges.</p>
+    </div>
+
+    <div class="card">
+      <h2>Responsibilities</h2>
+      <p>Governments and educational institutions are mandated to provide the necessary infrastructure, teachers, and learning materials to support free education.</p>
+    </div>
+
+    <div class="card">
+      <h2>Inclusion and Equality</h2>
+      <p>The law ensures non-discrimination in schools and promotes inclusion of children from all backgrounds, including marginalized and differently-abled children.</p>
+    </div>
+  </div>
+
+</body>
+</html>

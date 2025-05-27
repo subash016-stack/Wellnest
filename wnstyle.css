@@ -1,0 +1,164 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.header {
+    background-color: #da1e10;
+    color: white;
+    padding: 5px 20px 0px;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.title{
+    padding-left: 10px;
+    font-size: 20px;
+}
+.navbar {
+    background-color: #f9961e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+    border-radius: 25px;
+    
+}
+
+.tags {
+list-style:circle;
+display: flex;
+gap: 15px;
+}
+
+.use{
+    gap: 15px;
+    align-items:right;
+}
+
+.login{
+    padding: 10px 20px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    border: 2px solid rgb(255, 166, 0);
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    background-color: #da1e10;
+}
+    
+.signup{
+    padding: 10px 20px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    border: 2px solid rgb(255, 166, 0);
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    background-color: #da1e10;
+}
+
+.login:hover {
+    background-color: rgb(243, 126, 9);
+    color: #fffcfb;
+}
+
+.signup:hover {
+    background-color: rgb(243, 126, 9);
+    color: #fffcfb;
+}
+
+
+.hero {
+    position: relative;
+    height: 500px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXMTjEVGdN7cJjNyjl4QEVnl6JBHR3dxgv3Q&s"); /* Add the background image */
+    background-size: cover;
+    background-position: center;
+    padding-top: 15px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(210, 209, 209, 0.5); /* Dark overlay with reduced opacity */
+    z-index: 1; /* Ensures the overlay is above the image but below the text */
+}
+
+.hero .logo, .hero .content {
+    position: relative;
+    z-index: 2; /* Ensures that text/logo appears above the overlay */
+}
+
+.logo{
+    position:relative;
+    opacity: 1;
+    height: 175px;
+
+}
+.content {
+    position: relative;
+    color: rgb(29, 14, 63);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.content h1 {
+    font-size: 72px;
+    margin: 0;
+    outline: #fffcfb;
+}
+
+.content p {
+    margin: 20px 60px 50px 60px;
+    font-size: 16px;
+    background-color: #ffdcd2;
+    line-height: 2.2;
+    border-style: dashed;
+    border-color: #fffcfb;
+}
+
+.select {
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 30px;
+    background-color: #f7c78e;
+    height: 150px;
+}
+
+.kmbutton {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: rgb(10, 86, 88);
+    border: 2px solid rgb(14, 5, 5);
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.ofbutton{
+    padding: 10px 20px;
+    text-decoration: none;
+    color: rgb(10, 86, 88);
+    border: 2px solid rgb(7, 2, 2);
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.ofbutton:hover {
+    background-color: rgb(243, 75, 9);
+    color: #fffcfb;
+}
+
+.kmbutton:hover {
+    background-color: rgb(243, 75, 9);
+    color: #fffcfb;
+}

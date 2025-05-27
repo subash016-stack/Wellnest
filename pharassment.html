@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Protection Against Harassment | Wellnest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #007bff;
+      --accent: #d36f9b;
+      --bg-light: #c6e6ff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      scroll-behavior: smooth;
+      color: #000;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      color: #fff;
+    }
+
+    header h1 {
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 30px auto;
+      padding: 30px;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+      font-size: 24px;
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .card ul, .card ol {
+      padding-left: 20px;
+    }
+
+    .card li {
+      margin-bottom: 10px;
+    }
+
+    .card a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    button {
+      margin-top: 15px;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #c45c8a;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    /* Bubble background */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bubbles -->
+  <div class="bubbles">
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+
+  <header>
+    <h1>Protection Against Harassment</h1>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>What is Harassment?</h2>
+      <p>Harassment is any unwelcome behavior—verbal, physical, emotional, or sexual—that offends, humiliates, or intimidates another person. It can happen at work, school, in public spaces, or online.</p>
+      <p><strong>Examples include:</strong> inappropriate comments, touching without consent, stalking, cyberbullying, and threats.</p>
+    </section>
+
+    <section class="card">
+      <h2>Types of Harassment</h2>
+      <ul>
+        <li><strong>Sexual Harassment:</strong> Unwanted sexual advances or comments.</li>
+        <li><strong>Workplace Harassment:</strong> Discrimination, bullying, or power abuse at work.</li>
+        <li><strong>Cyber Harassment:</strong> Online threats, abusive messages, or non-consensual sharing of images.</li>
+        <li><strong>Street Harassment:</strong> Catcalling, stalking, or physical intimidation in public spaces.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Your Rights</h2>
+      <ul>
+        <li>Right to a safe workplace under laws like the POSH Act (India).</li>
+        <li>Right to report harassment to authorities or internal committees.</li>
+        <li>Right to confidentiality and protection during investigations.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>What To Do If You're Harassed</h2>
+      <ol>
+        <li><strong>Stay Safe:</strong> Remove yourself from danger if possible.</li>
+        <li><strong>Document Everything:</strong> Keep records of messages, dates, or witness names.</li>
+        <li><strong>Report It:</strong> File a complaint with HR, Internal Committees, or the police.</li>
+        <li><strong>Seek Support:</strong> Talk to a trusted person or counselor.</li>
+      </ol>
+    </section>
+
+    <section id="help-info" class="card hidden">
+      <h2>Help & Support</h2>
+      <ul>
+        <li><strong>National Women’s Helpline (India):</strong> 181</li>
+        <li><strong>Childline:</strong> 1098 (24x7 Helpline for children)</li>
+        <li><strong>Police Emergency:</strong> 100</li>
+        <li><strong>NCW Complaint Portal:</strong> <a href="https://ncw.nic.in/" target="_blank">ncw.nic.in</a></li>
+        <li><strong>Trusted NGOs:</strong> [Insert Local Listings Here]</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Wellnest. All rights reserved.
+  </footer>
+
+  <script>
+    function showHelp() {
+      document.getElementById("help-info").classList.toggle("hidden");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wellnest - Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --bg-dark: #1e1e1e;
+      --container-light: rgba(255, 255, 255, 0.2);
+      --container-dark: rgba(40, 40, 40, 0.7);
+      --text-light: #000;
+      --text-dark: #fff;
+      --input-light: rgba(255, 255, 255, 0.8);
+      --input-dark: rgba(70, 70, 70, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-y: auto;
+      transition: background 0.5s ease;
+    }
+
+    body.dark {
+      background: var(--bg-dark);
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+      min-height: 100vh;
+    }
+
+    .registration-container {
+      background: var(--container-light);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      padding: 40px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 500px;
+      color: var(--text-light);
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    body.dark .registration-container {
+      background: var(--container-dark);
+      color: var(--text-dark);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
+      outline: none;
+      background: var(--input-light);
+      transition: all 0.3s ease;
+    }
+
+    body.dark .input-group input,
+    body.dark .input-group select {
+      background: var(--input-dark);
+      color: var(--text-dark);
+    }
+
+    .input-group input::placeholder {
+      color: #444;
+    }
+
+    button {
+      background: #007bff;
+      color: #fff;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #005bb5;
+    }
+    body.dark .toggle-mode {
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+    }
+
+    /* Animated Checkmark */
+    .success-checkmark {
+      display: none;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 5px solid #4caf50;
+      position: absolute;
+      top: -40px;
+      left: calc(50% - 40px);
+      animation: popin 0.5s ease;
+    }
+
+    .success-checkmark::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 40px;
+      border-right: 5px solid #4caf50;
+      border-bottom: 5px solid #4caf50;
+      transform: rotate(45deg);
+      top: 15px;
+      left: 25px;
+    }
+
+    @keyframes popin {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Scrollbar styles */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Bubble effect */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @media (max-width: 600px) {
+      .registration-container {
+        padding: 25px;
+      }
+
+      .success-checkmark {
+        top: -30px;
+      }
+    }
+  </style>
+</head>
+<body>
+    <!-- Bubbles -->
+  <div class="bubbles">
+    <!-- Create 25 bubbles -->
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+  <div class="container-wrapper">
+    <div class="registration-container">
+      <div class="success-checkmark" id="success-check"></div>
+      <h2>Wellnest Registration</h2>
+      <form id="registration-form">
+        <div class="input-group">
+          <label for="fullname">Full Name</label>
+          <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required />
+        </div>
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Choose a username" required />
+        </div>
+        <div class="input-group">
+          <label for="role">Role</label>
+          <select id="role" name="role" required>
+            <option value="">Select</option>
+            <option value="counsellor">Counsellor</option>
+            <option value="user">User</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required />
+        </div>
+        <div class="input-group">
+          <label for="email">Email Address</label>
+          <input
+           type="email"
+           id="email"
+  name="email"
+  placeholder="your@email.com"
+  required
+  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in|org|net|edu|gov)$"
+  title="Enter a valid email address"
+/>
+        </div>
+        <div class="input-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="10-digit phone number" required pattern="\d{10}" maxlength="10" title="Phone number must be exactly 10 digits" />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Create a password" required />
+        </div>
+        <div class="input-group">
+          <label for="confirm_password">Confirm Password</label>
+          <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required />
+        </div>
+        <div class="input-group">
+          <label>
+            <input type="checkbox" name="terms" required />
+            I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+          </label>
+        </div>
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+   
+
+    document.querySelector("#registration-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = {};
+
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      try {
+        const response = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          document.getElementById("success-check").style.display = "block";
+          setTimeout(() => {
+            document.getElementById("success-check").style.display = "none";
+            form.reset();
+            alert("🎉 Registration successful!");
+          }, 2000);
+        } else {
+          alert("❌ Error: " + result.message);
+        }
+      } catch (error) {
+        console.error("Submission failed:", error);
+        alert("🚨 Something went wrong.");
+      }
+    });
+  </script>
+</body>
+</html>

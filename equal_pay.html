@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Equal Pay for Equal Work - Wellnest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(40, 40, 40, 0.7);
+      --accent-blue: #007bff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      color: var(--text-light);
+      scroll-behavior: smooth;
+      padding: 40px 15px;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 2.5rem;
+      color: var(--accent-blue);
+      margin-bottom: 40px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 20px auto;
+      padding: 30px;
+      max-width: 800px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      color: var(--text-light);
+    }
+
+    .card h2 {
+      font-size: 1.75rem;
+      color: var(--accent-blue);
+      border-bottom: 2px solid var(--accent-blue);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 1.1rem;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Equal Pay for Equal Work</h1>
+
+  <div class="card">
+    <h2>Overview</h2>
+    <p>Equal pay for equal work ensures that employees receive the same compensation for performing the same or equivalent job duties, regardless of gender, race, or other protected characteristics.</p>
+  </div>
+
+  <div class="card">
+    <h2>Legal Protections</h2>
+    <p>Various labor laws and regulations prohibit wage discrimination and support pay equity. These may include national equal pay acts, labor codes, and human rights legislation.</p>
+  </div>
+
+  <div class="card">
+    <h2>Identifying Pay Gaps</h2>
+    <p>Employees can request transparency in pay structures and conduct comparisons within their organization. Disparities in pay for the same roles may be grounds for legal action.</p>
+  </div>
+
+  <div class="card">
+    <h2>Employee Rights</h2>
+    <p>Employees have the right to file complaints if they experience unequal pay. Employers are prohibited from retaliating against individuals who raise pay equity concerns.</p>
+  </div>
+
+  <div class="card">
+    <h2>Employer Responsibilities</h2>
+    <p>Employers must ensure fair compensation practices, conduct regular pay audits, and eliminate unjustified wage disparities to maintain compliance and promote workplace equality.</p>
+  </div>
+
+</body>
+</html>

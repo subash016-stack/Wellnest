@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Guidance Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e0f2f7; /* Lighter sky blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .chat-container {
+            background-color: #ffffff;
+            border-radius: 16px; /* Slightly more rounded corners */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* Stronger, softer shadow */
+            width: 100%;
+            max-width: 750px; /* Slightly wider */
+            display: flex;
+            flex-direction: column;
+            height: 90vh; /* Slightly taller */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chat-header {
+            background: linear-gradient(to right, #87CEEB, #4682B4); /* Sky blue to steel blue gradient */
+            color: white;
+            padding: 20px 25px; /* More padding */
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow below header */
+            position: relative;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 1.6em; /* Slightly larger title */
+            font-weight: 700; /* Bolder title */
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Simple icon representation - replace with actual SVG/Font Awesome if desired */
+        .chat-header h2::before {
+            content: '💬'; /* Chat bubble icon */
+            font-size: 1.2em;
+        }
+
+        .chat-header p {
+            margin: 8px 0 0;
+            font-size: 1em; /* Clearer subtitle */
+            opacity: 0.95;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 25px; /* More padding */
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Increased gap between messages */
+            scroll-behavior: smooth;
+            background-color: #f7fbfc; /* Very light blue/off-white for message area */
+        }
+
+        .message {
+            max-width: 70%; /* Slightly narrower messages */
+            padding: 12px 18px; /* More padding in bubbles */
+            border-radius: 22px; /* More rounded bubbles */
+            position: relative;
+            word-wrap: break-word;
+            font-size: 1em; /* Slightly larger text in bubbles */
+            line-height: 1.5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* Softer bubble shadow */
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: #DCF8C6; /* Light green for user messages - classic chat feel */
+            color: #333;
+            border-bottom-right-radius: 8px; /* Pointier bottom right corner */
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background-color: #E6F3F9; /* Light sky blue for bot messages */
+            color: #333;
+            border-bottom-left-radius: 8px; /* Pointier bottom left corner */
+        }
+
+        .chat-input-area {
+            padding: 20px 25px;
+            border-top: 1px solid #cfe9f4; /* Lighter, subtle border */
+            background-color: #f9f9f9;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+        }
+
+        .prebuilt-comments {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* More gap between tiles */
+            margin-bottom: 15px; /* More space below tiles */
+            max-height: 130px; /* Increased height to accommodate more tiles */
+            overflow-y: auto;
+            padding-right: 5px; /* For scrollbar */
+        }
+
+        .comment-tile {
+            background-color: #4CAF50; /* Green tiles for actionable items */
+            color: white;
+            padding: 12px 20px; /* Larger padding */
+            border-radius: 25px; /* More rounded pill-shape */
+            cursor: pointer;
+            font-size: 0.95em; /* Slightly larger tile text */
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            flex-shrink: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-tile:hover {
+            background-color: #43A047; /* Darker green on hover */
+            transform: translateY(-2px); /* Lift effect */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+        }
+
+        .comment-tile:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-input-placeholder {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            font-size: 0.95em;
+            padding: 15px 0;
+            border-top: 1px dashed #d1e2eb; /* Lighter dashed border */
+            margin-top: 10px;
+        }
+
+        /* Scrollbar styling for Webkit browsers */
+        .chat-messages::-webkit-scrollbar,
+        .prebuilt-comments::-webkit-scrollbar {
+            width: 8px;
+            background-color: #f0f8ff; /* Lightest sky blue for track */
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb,
+        .prebuilt-comments::-webkit-scrollbar-thumb {
+            background-color: #a7d9ed; /* Medium sky blue for thumb */
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track,
+        .prebuilt-comments::-webkit-scrollbar-track {
+            background-color: #f0f8ff; /* Match chat background */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .chat-container {
+                height: 95vh;
+                max-width: 95%;
+                border-radius: 12px;
+            }
+            .chat-header {
+                padding: 15px 20px;
+                border-top-left-radius: 12px;
+                border-top-right-radius: 12px;
+            }
+            .chat-header h2 {
+                font-size: 1.3em;
+            }
+            .message {
+                max-width: 85%;
+                font-size: 0.9em;
+            }
+            .comment-tile {
+                font-size: 0.85em;
+                padding: 10px 15px;
+            }
+            .chat-input-area {
+                padding: 15px 20px;
+                border-bottom-left-radius: 12px;
+                border-bottom-right-radius: 12px;
+            }
+            .prebuilt-comments {
+                 max-height: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-container {
+                border-radius: 0;
+                height: 100vh;
+                max-width: 100%;
+                box-shadow: none;
+            }
+            body {
+                padding: 0;
+            }
+            .chat-header {
+                border-radius: 0;
+                padding: 12px 15px;
+            }
+            .chat-input-area {
+                border-radius: 0;
+            }
+            .message {
+                font-size: 0.85em;
+            }
+            .comment-tile {
+                font-size: 0.8em;
+                padding: 8px 12px;
+            }
+            .message-input-placeholder {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Legal Guidance for Women & Children</h2>
+            <br>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            </div>
+        <div class="chat-input-area">
+            <div class="prebuilt-comments" id="prebuilt-comments">
+                </div>
+            <div class="message-input-placeholder">
+                <span>Click a tile above to start a conversation.</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatMessages = document.getElementById('chat-messages');
+            const prebuiltCommentsContainer = document.getElementById('prebuilt-comments');
+
+            const conversations = [
+                {
+                    comment: "I'm a woman experiencing domestic violence. What are my legal options?",
+                    response: "If you are experiencing domestic violence, your safety is paramount. You are protected under the Protection of Women from Domestic Violence Act, 2005. This law allows you to seek a protection order, residence order, monetary relief, and custody orders. Your next steps should be to contact the police (dial 112 or local police), reach out to a women's helpline (e.g., 1098 CHILDLINE for children's issues or National Commission for Women helpline), and consult a family law attorney immediately to file a Domestic Incident Report (DIR) and initiate legal proceedings."
+                },
+                {
+                    comment: "My child's father isn't paying child support. What steps can I take?",
+                    response: "Child support (maintenance) is mandated under various personal laws and Section 125 of the Criminal Procedure Code (CrPC), 1973, which applies irrespective of religion. You can file a petition in a Family Court for enforcement of maintenance. Your next steps include gathering all financial records (bank statements, income proof of father), documenting missed payments, and consulting a family law attorney to file a maintenance petition and/or execute any existing orders."
+                },
+                {
+                    comment: "I need help understanding my rights during a divorce.",
+                    response: "Your rights during a divorce are governed by your personal laws (e.g., Hindu Marriage Act, 1955, Special Marriage Act, 1954, Indian Divorce Act, 1869 for Christians, Muslim Personal Law). Key rights include maintenance/alimony (Section 25 of Hindu Marriage Act, Section 125 CrPC), child custody and visitation, and Stridhan (woman's absolute property). Your next steps should be to consult a divorce lawyer who can advise on your specific religious or secular law, discuss grounds for divorce, and help with negotiation or litigation for maintenance, custody, and property division."
+                },
+                {
+                    comment: "What legal protections are available for child abuse victims?",
+                    response: "Child abuse victims are primarily protected under The Protection of Children from Sexual Offences (POCSO) Act, 2012 (for sexual abuse) and the Juvenile Justice (Care and Protection of Children) Act, 2015 (for other forms of abuse/neglect). Your next steps are to immediately report suspected abuse to the police (dial 112) or CHILDLINE (1098). The police are mandated to inform the Child Welfare Committee (CWC). Seek support from child protection organizations and legal aid services."
+                },
+                {
+                    comment: "How can I get legal guardianship of a child?",
+                    response: "Legal guardianship of a child is primarily handled under the Guardians and Wards Act, 1890, and specific personal laws (e.g., Hindu Minority and Guardianship Act, 1956). The court prioritizes the child's welfare. Your next steps involve filing a petition in the District Court (or Family Court if applicable), providing reasons why guardianship is necessary, and demonstrating your suitability. It's highly advisable to engage a lawyer experienced in guardianship cases."
+                },
+                {
+                    comment: "I want to know about women's property rights in India.",
+                    response: "Women's property rights in India are significantly strengthened by the Hindu Succession (Amendment) Act, 2005, which grants daughters equal coparcenary rights in ancestral property as sons. For self-acquired property, both sons and daughters have equal rights to inherit. Section 14 of the Hindu Succession Act, 1956, ensures a female Hindu is the absolute owner of her property. Your next steps should be to gather all relevant property documents, understand if the property is ancestral or self-acquired, and consult a property lawyer to understand your specific inheritance rights and how to claim them."
+                },
+                {
+                    comment: "What are the legal rights of a pregnant woman in employment?",
+                    response: "Pregnant women in India are protected by the Maternity Benefit Act, 1961 (amended in 2017). This Act provides for 26 weeks of paid maternity leave for the first two children, job protection, and prohibits dismissal due to pregnancy. Employers with 50+ employees must also provide creche facilities. Your next steps are to inform your employer about your pregnancy as per company policy, apply for maternity leave in advance, and be aware of your rights against discrimination. If your rights are violated, you can file a complaint with the Labour Commissioner or seek legal advice."
+                },
+                {
+                    comment: "My employer is forcing me to work excessive hours. What are my rights?",
+                    response: "Rights regarding working hours, especially for women, are covered by the Factories Act, 1948 (for factory workers) and various Shops and Establishments Acts at the state level. Generally, women cannot be made to work between 7 PM and 6 AM without special permission, and there are limits on daily and weekly hours. Your next steps include documenting your working hours, reviewing your employment contract, and if necessary, raising a formal complaint with your HR department or union. If the issue persists, approach the Labour Commissioner or consult a labour law expert."
+                },
+                {
+                    comment: "What is the legal age for marriage in India, and what if it's violated?",
+                    response: "The legal age for marriage in India is 18 years for females and 21 years for males, as per The Prohibition of Child Marriage Act, 2006. Marriages solemnized below these ages are voidable at the option of the child. If this law is violated, your next steps should be to report the child marriage to the police, Childline (1098), or the Child Marriage Prohibition Officer in your district immediately. Those involved in performing or abetting such marriages can face legal penalties, including imprisonment and fines."
+                },
+                {
+                    comment: "I'm a victim of a crime. How can I get free legal aid?",
+                    response: "As a woman victim of crime, you are entitled to free legal aid irrespective of your income or financial status under Section 12(c) of the Legal Services Authorities Act, 1987. Your next steps are to contact your nearest District Legal Services Authority (DLSA), State Legal Services Authority (SLSA), or the National Legal Services Authority (NALSA). You can apply in person, by simple application, or even via email. They will assign you a lawyer to represent your case."
+                },
+                {
+                    comment: "What happens if a child commits a crime in India?",
+                    response: "If a child (defined as anyone below 18 years of age) commits a crime, they are considered a 'Child in Conflict with Law' and are governed by the Juvenile Justice (Care and Protection of Children) Act, 2015. They are not tried in regular adult courts. Your next steps, if you encounter such a situation or are involved, are to inform the police, who must then present the child before the Juvenile Justice Board (JJB) within 24 hours. The JJB assesses the child's case and decides on appropriate rehabilitation measures, prioritizing the child's best interests. Legal aid is available for children in conflict with the law."
+                },
+                {
+                    comment: "Can a mother claim maintenance for herself and her child after divorce?",
+                    response: "Yes, a mother can claim maintenance for herself and her minor child/children after divorce. This is covered under various personal laws (e.g., Hindu Marriage Act, 1955; Muslim Women (Protection of Rights on Divorce) Act, 1986) and also under Section 125 of the Criminal Procedure Code (CrPC), 1973. Your next steps are to file a maintenance petition in the Family Court. You will need to provide details of your financial needs and your husband's income. It is highly recommended to consult a family lawyer to assist with the application process and representation."
+                },
+                {
+                    comment: "What are a woman's rights in case of desertion by her husband?",
+                    response: "If a husband deserts his wife, she has several legal rights. She can claim maintenance for herself and any dependent children under Section 125 of the Criminal Procedure Code (CrPC), 1973, or under relevant personal laws (e.g., Hindu Marriage Act, 1955). Desertion can also be a ground for seeking a divorce. Your next steps should be to gather evidence of desertion, such as communication records or witness statements. Then, you should consult a family lawyer to file a maintenance petition and/or a divorce petition on grounds of desertion."
+                },
+                {
+                    comment: "How does the law protect children from online exploitation?",
+                    response: "Children are protected from online exploitation primarily under The Information Technology Act, 2000, and The Protection of Children from Sexual Offences (POCSO) Act, 2012. These laws address cyber pornography involving children, online harassment, and grooming. Your next steps are to immediately report any instances of online exploitation to the police cybercrime unit, or the National Centre for Missing and Exploited Children (NCMEC) if applicable. Preserve all digital evidence (screenshots, messages). It's crucial to seek assistance from child protection organizations and legal experts specializing in cyber laws."
+                },
+                {
+                    comment: "What are the legal provisions for adoption of children in India?",
+                    response: "Adoption in India is governed by the Juvenile Justice (Care and Protection of Children) Act, 2015, and the Hindu Adoptions and Maintenance Act, 1956. The former covers adoption of orphaned, abandoned, and surrendered children through the Central Adoption Resource Authority (CARA), while the latter covers adoption by Hindus. Your next steps would be to register with an authorized adoption agency, complete a home study, and then follow the legal process for court approval. It's advisable to consult an adoption lawyer or an authorized agency for detailed guidance."
+                },
+                {
+                    comment: "What are the legal rights of a surrogate mother?",
+                    response: "The rights of a surrogate mother in India are primarily governed by The Surrogacy (Regulation) Act, 2021. This Act allows only altruistic surrogacy (no monetary compensation to the surrogate beyond medical expenses and insurance) for intending couples who are legally married and infertile. It also mandates that the surrogate must be a close relative. Your next steps would be to understand the complete legal framework, ensure all agreements are legally sound and signed, and work with registered fertility clinics and legal experts specializing in reproductive law to ensure your rights and well-being are protected."
+                }
+            ];
+
+            function createMessageElement(text, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', type);
+                messageDiv.innerHTML = text; // Use innerHTML to allow for formatting
+                return messageDiv;
+            }
+
+            function addMessage(text, type) {
+                const msgElement = createMessageElement(text, type);
+                chatMessages.appendChild(msgElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+            }
+
+            function addPrebuiltComments() {
+                conversations.forEach(conv => {
+                    const commentTile = document.createElement('button');
+                    commentTile.classList.add('comment-tile');
+                    commentTile.textContent = conv.comment;
+                    commentTile.addEventListener('click', () => {
+                        addMessage(conv.comment, 'user');
+                        // Simulate typing delay for bot response
+                        setTimeout(() => {
+                            addMessage(conv.response, 'bot');
+                        }, 1000); // 1 second delay
+                    });
+                    prebuiltCommentsContainer.appendChild(commentTile);
+                });
+            }
+
+            // Initial greeting from the bot
+            addMessage("Hello! I'm here to provide general information on legal guidance for women and children in India. Please click on a topic below to get started.", 'bot');
+
+            // Add the pre-built comment tiles
+            addPrebuiltComments();
+        });
+    </script>
+</body>
+</html>

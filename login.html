@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Wellnest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --accent: #007bff;
+      --card-bg: rgba(255, 255, 255, 0.15);
+      --text-light: #fff;
+      --text-dark: #222;
+      --card-border: rgba(255, 255, 255, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      position: relative;
+      padding-top: 80px;
+      padding-bottom: 60px;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Bubble background */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: rgba(0, 123, 255, 0.8);
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 28px;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      user-select: none;
+    }
+
+    .container {
+      position: relative;
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      width: 320px;
+      padding: 30px 25px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 5;
+      color: var(--text-dark);
+    }
+
+    .container h2 {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 26px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: var(--text-dark);
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select {
+      padding: 10px 12px;
+      font-size: 15px;
+      border-radius: 12px;
+      border: 2px solid var(--accent);
+      outline: none;
+      transition: border-color 0.3s ease;
+      width: 100%;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    select:focus {
+      border-color: #0056b3;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #0056b3;
+    }
+
+    .login-link {
+      margin-top: 14px;
+      font-size: 14px;
+      text-align: center;
+      color: var(--text-dark);
+    }
+
+    .login-link a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      transition: text-decoration 0.3s ease;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 15px 0;
+      text-align: center;
+      color: var(--text-light);
+      background: rgba(0, 0, 0, 0.3);
+      font-weight: 500;
+      font-size: 14px;
+      user-select: none;
+      z-index: 10;
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        width: 90%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bubbles"></div>
+
+  <header>
+    Wellnest Community Login
+  </header>
+
+  <div class="container" role="main">
+    <h2>Login to Wellnest</h2>
+    <form id="login-form" aria-label="Login form">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" autocomplete="username" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required />
+
+      <label for="role">Role</label>
+      <select id="role" name="role" required>
+        <option value="" disabled selected>Select role</option>
+        <option value="user">User</option>
+        <option value="counsellor">Counsellor</option>
+      </select>
+
+      <button type="submit" class="btn">Log In</button>
+    </form>
+
+    <p class="login-link">
+      Don't have an account? <a href="wreg.html">Sign up here</a>
+    </p>
+    
+  </div>
+
+  <footer>&copy; 2025 Wellnest. All rights reserved.</footer>
+
+  <script>
+    // Generate bubbles dynamically
+    const bubblesContainer = document.querySelector('.bubbles');
+    for(let i = 0; i < 25; i++) {
+      const span = document.createElement('span');
+      span.style.left = `${Math.random() * 100}%`;
+      const size = 10 + Math.random() * 20;
+      span.style.width = `${size}px`;
+      span.style.height = `${size}px`;
+      span.style.animationDuration = `${6 + Math.random() * 5}s`;
+      span.style.animationDelay = `${Math.random() * 5}s`;
+      bubblesContainer.appendChild(span);
+    }
+    const form = document.querySelector('#login-form');
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = {
+        username: form.username.value.trim(),
+        password: form.password.value.trim(),
+        role: form.role.value
+      };
+
+      try {
+        const response = await fetch('http://localhost:3000/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert(`Login successful as ${data.role}`);
+          localStorage.setItem("username", formData.username);
+          localStorage.setItem("role", data.role);
+
+          if (data.role === "user") {
+            window.location.href = "dboard.html";
+          } else if (data.role === "counsellor") {
+            window.location.href = "cdboard.html";
+          } else {
+            alert("Unknown role. Please contact admin.");
+          }
+        } else {
+          alert(`Error: ${data.message}`);
+        }
+      } catch (error) {
+        alert(`Error submitting data: ${error.message}`);
+      }
+    });
+  </script>
+
+</body>
+</html>

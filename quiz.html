@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <title>Wellnest Quiz: Learn and Protect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(40, 40, 40, 0.7);
+      --primary: #007bff;
+      --btn-bg: rgba(0, 123, 255, 0.7);
+      --btn-hover: rgba(0, 123, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      color: var(--text-light);
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Bubble background */
+    .bubbles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      font-weight: 600;
+      font-size: 2rem;
+      color: var(--text-dark);
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 6px rgba(0,0,0,0.3);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 30px auto 60px;
+      padding: 30px;
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+      color: var(--text-light);
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background-color: var(--btn-bg);
+      color: var(--text-dark);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 10px 8px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      background-color: var(--btn-hover);
+      color: #fff;
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .question-card {
+      text-align: left;
+    }
+
+    .question {
+      font-size: 1.4rem;
+      margin-bottom: 25px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .option-btn {
+      background-color: rgba(255 255 255 / 0.6);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      user-select: none;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background-color: rgba(0 123 255 / 0.15);
+    }
+
+    .option-btn.correct {
+      background-color: #c8e6c9;
+      border-color: #4caf50;
+      color: #2e7d32;
+      font-weight: 700;
+      cursor: default;
+    }
+
+    .option-btn.incorrect {
+      background-color: #ffcdd2;
+      border-color: #e53935;
+      color: #b71c1c;
+      cursor: default;
+    }
+
+    .explanation {
+      font-style: italic;
+      margin: 15px 0;
+      color: #0b0b0b;
+      font-size: 1rem;
+      min-height: 40px;
+      user-select: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .score {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 15px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-dark);
+      background: rgba(255 255 255 / 0.25);
+      padding: 20px 10px;
+      position: relative;
+      z-index: 1;
+      user-select: none;
+      font-weight: 500;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px 15px 50px;
+        padding: 20px;
+      }
+
+      .question {
+        font-size: 1.2rem;
+      }
+
+      .btn {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bubbles -->
+  <div class="bubbles">
+    <script>
+      for (let i = 0; i < 25; i++) {
+        const span = document.createElement('span');
+        span.style.left = `${Math.random() * 100}%`;
+        span.style.width = `${10 + Math.random() * 20}px`;
+        span.style.height = span.style.width;
+        span.style.animationDuration = `${6 + Math.random() * 5}s`;
+        span.style.animationDelay = `${Math.random() * 5}s`;
+        document.querySelector(".bubbles").appendChild(span);
+      }
+    </script>
+  </div>
+
+  <header>Wellnest Quiz: Learn and Protect</header>
+
+  <div class="container" id="start-screen">
+    <h2>Select Your Quiz</h2>
+    <button class="btn" onclick="startQuiz('women')">Women’s Safety & Rights</button>
+    <button class="btn" onclick="startQuiz('children')">Child Safety Awareness</button>
+    <div class="score" id="last-score"></div>
+  </div>
+
+  <div class="container hidden" id="quiz-screen">
+    <div class="question-card">
+      <div class="question" id="question-text"></div>
+      <div class="options" id="options-container"></div>
+      <div class="explanation" id="explanation-text"></div>
+      <button class="btn hidden" id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+  </div>
+
+  <footer>
+    📘 Learn while you answer — awareness saves lives!
+  </footer>
+
+  <script>
+    const quizData = {
+      women: [
+        {
+          question: "What is the national helpline number for women in distress in India?",
+          options: ["100", "181", "112", "108"],
+          answer: "181",
+          explanation: "181 is the dedicated helpline for women in distress."
+        },
+        {
+          question: "Which law protects women against domestic violence in India?",
+          options: ["IPC Section 375", "Protection of Women from Domestic Violence Act, 2005", "Dowry Prohibition Act", "None"],
+          answer: "Protection of Women from Domestic Violence Act, 2005",
+          explanation: "This act provides protection against domestic violence."
+        },
+        {
+          question: "What rights does the Maternity Benefit Act, 1961 provide?",
+          options: ["Paid maternity leave", "Free childcare", "Education for mothers", "None"],
+          answer: "Paid maternity leave",
+          explanation: "It mandates paid maternity leave for women employees."
+        },
+        {
+          question: "Which of these is a fundamental right related to gender equality?",
+          options: ["Right to Education", "Right to Equality under Article 14", "Right to Property", "Right to Vote"],
+          answer: "Right to Equality under Article 14",
+          explanation: "Article 14 guarantees equality before the law."
+        },
+        {
+          question: "Which government scheme provides financial assistance to women for self-employment?",
+          options: ["Beti Bachao Beti Padhao", "Mahila E-Haat", "National Rural Livelihood Mission", "Stand Up India"],
+          answer: "Stand Up India",
+          explanation: "Stand Up India supports women entrepreneurs."
+        }
+      ],
+      children: [
+        {
+          question: "What is the legal age of a child according to the UN Convention on the Rights of the Child?",
+          options: ["16 years", "18 years", "21 years", "14 years"],
+          answer: "18 years",
+          explanation: "Under the UNCRC, a child is defined as under 18 years."
+        },
+        {
+          question: "Which act protects children against sexual offences in India?",
+          options: ["POCSO Act", "Juvenile Justice Act", "Child Labour Act", "None"],
+          answer: "POCSO Act",
+          explanation: "Protection of Children from Sexual Offences (POCSO) Act is key."
+        },
+        {
+          question: "What is the Right to Education Act's mandate in India?",
+          options: ["Free and compulsory education for children 6-14 years", "Only free education", "Only compulsory education", "None"],
+          answer: "Free and compulsory education for children 6-14 years",
+          explanation: "RTE Act mandates free and compulsory education for children in this age group."
+        },
+        {
+          question: "Which of these is a child welfare scheme?",
+          options: ["Midday Meal Scheme", "Jan Dhan Yojana", "Atal Pension Yojana", "Swachh Bharat Mission"],
+          answer: "Midday Meal Scheme",
+          explanation: "This scheme provides nutritious meals to school children."
+        },
+        {
+          question: "Which organization works for children's rights worldwide?",
+          options: ["UNICEF", "WHO", "UNESCO", "WTO"],
+          answer: "UNICEF",
+          explanation: "UNICEF focuses on child welfare globally."
+        }
+      ]
+    };
+
+    let currentQuiz = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    const startScreen = document.getElementById('start-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const explanationText = document.getElementById('explanation-text');
+    const nextBtn = document.getElementById('next-btn');
+    const lastScore = document.getElementById('last-score');
+
+    function startQuiz(category) {
+      currentQuiz = quizData[category];
+      currentQuestionIndex = 0;
+      score = 0;
+      startScreen.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      explanationText.textContent = '';
+      nextBtn.classList.add('hidden');
+      showQuestion();
+    }
+
+    function showQuestion() {
+      explanationText.textContent = '';
+      nextBtn.classList.add('hidden');
+      const currentQ = currentQuiz[currentQuestionIndex];
+      questionText.textContent = `Q${currentQuestionIndex + 1}. ${currentQ.question}`;
+      optionsContainer.innerHTML = '';
+
+      currentQ.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.classList.add('option-btn');
+        btn.textContent = option;
+        btn.onclick = () => selectAnswer(btn, option, currentQ.answer, currentQ.explanation);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(button, selected, correctAnswer, explanation) {
+      // Disable all buttons
+      const buttons = optionsContainer.querySelectorAll('button');
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent === correctAnswer) {
+          btn.classList.add('correct');
+        }
+        if (btn.textContent === selected && selected !== correctAnswer) {
+          btn.classList.add('incorrect');
+        }
+      });
+
+      if (selected === correctAnswer) {
+        score++;
+      }
+
+      explanationText.textContent = explanation;
+      nextBtn.classList.remove('hidden');
+
+      if (currentQuestionIndex === currentQuiz.length - 1) {
+        nextBtn.textContent = 'Finish';
+      } else {
+        nextBtn.textContent = 'Next';
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex >= currentQuiz.length) {
+        showResult();
+      } else {
+        showQuestion();
+      }
+    }
+
+    function showResult() {
+      quizScreen.classList.add('hidden');
+      startScreen.classList.remove('hidden');
+      lastScore.textContent = `Your score: ${score} / ${currentQuiz.length}`;
+      nextBtn.classList.add('hidden');
+    }
+
+    // Show last score from localStorage if present
+   // Remove or comment this out to avoid showing last score on reload
+window.onload = () => {
+  const savedScore = localStorage.getItem('wellnestQuizScore');
+  const savedCategory = localStorage.getItem('wellnestQuizCategory');
+  if (savedScore !== null && savedCategory) {
+    lastScore.textContent = `Last played (${savedCategory === 'women' ? "Women's" : "Child"} Quiz) score: ${savedScore}`;
+  }
+};
+
+    // Save score on quiz finish
+    function showResult() {
+      quizScreen.classList.add('hidden');
+      startScreen.classList.remove('hidden');
+      lastScore.textContent = `Your score: ${score} / ${currentQuiz.length}`;
+      localStorage.setItem('wellnestQuizScore', score);
+      localStorage.setItem('wellnestQuizCategory', currentQuiz === quizData.women ? 'women' : 'children');
+      nextBtn.classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

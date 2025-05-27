@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Profile - Wellnest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #c6e6ff;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-bg: rgba(255, 255, 255, 0.2);
+      --card-border: rgba(255, 255, 255, 0.3);
+      --primary-color: #007bff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      background: linear-gradient(-45deg, var(--bg-light), #a2ccff, var(--bg-light), #a2ccff);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: var(--text-light);
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Bubble background */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubbles span {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+
+    .bubbles span:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    .profile-container {
+      position: relative;
+      z-index: 1;
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 40px 50px;
+      max-width: 700px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      color: var(--text-light);
+    }
+
+    .profile-image {
+      flex: 1 1 200px;
+      text-align: center;
+    }
+
+    .profile-image img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 5px solid #a2ccff;
+      object-fit: cover;
+      box-shadow: 0 0 15px rgba(0,123,255,0.5);
+    }
+
+    .profile-details {
+      flex: 2 1 400px;
+    }
+
+    .profile-details h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .info {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .label {
+      font-weight: 600;
+      min-width: 110px;
+      color: #004a99;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .info span.value {
+      color: #001f4d;
+      word-break: break-word;
+    }
+
+    @media (max-width: 768px) {
+      .profile-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 25px;
+      }
+      .profile-details {
+        width: 100%;
+      }
+      .profile-details h1 {
+        text-align: center;
+      }
+      .info {
+        justify-content: center;
+      }
+      .label {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bubbles"></div>
+  <script>
+    const bubbleContainer = document.querySelector(".bubbles");
+    for (let i = 0; i < 25; i++) {
+      const span = document.createElement('span');
+      span.style.left = `${Math.random() * 100}%`;
+      const size = 10 + Math.random() * 20;
+      span.style.width = `${size}px`;
+      span.style.height = `${size}px`;
+      span.style.animationDuration = `${6 + Math.random() * 5}s`;
+      span.style.animationDelay = `${Math.random() * 5}s`;
+      bubbleContainer.appendChild(span);
+    }
+  </script>
+
+  <div class="profile-container" role="region" aria-label="User Profile">
+    <div class="profile-image" aria-label="User Profile Picture">
+      <img src="http://drive.google.com/thumbnail?id=1psqjWMPCm2S37FiOTJFRzY0x84zxG5P_&sz=s800" alt="User Photo" />
+    </div>
+    <div class="profile-details">
+      <h1>Your Profile</h1>
+      <div class="info"><span class="label"><i class="fas fa-user"></i> Name:</span> <span id="profile-name" class="value">Loading...</span></div>
+      <div class="info"><span class="label"><i class="fas fa-envelope"></i> Email:</span> <span id="profile-email" class="value">Loading...</span></div>
+      <div class="info"><span class="label"><i class="fas fa-phone"></i> Mobile:</span> <span id="profile-mobile" class="value">Loading...</span></div>
+      <div class="info"><span class="label"><i class="fas fa-user-tag"></i> Role:</span> <span id="profile-role" class="value">Loading...</span></div>
+      <div class="info"><span class="label"><i class="fas fa-user-circle"></i> Username:</span> <span id="profile-username" class="value">Loading...</span></div>
+    </div>
+  </div>
+
+  <script>
+    const username = localStorage.getItem('username');
+
+    if (!username) {
+      alert("User not logged in.");
+      window.location.href = "login.html";
+    } else {
+      fetch(`http://localhost:3000/user/${username}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("User not found");
+          }
+          return response.json();
+        })
+        .then(user => {
+          document.getElementById('profile-name').textContent = user.name || 'N/A';
+          document.getElementById('profile-email').textContent = user.email || 'N/A';
+          document.getElementById('profile-mobile').textContent = user.mobile || 'N/A';
+          document.getElementById('profile-role').textContent = user.role || 'N/A';
+          document.getElementById('profile-username').textContent = user.username || 'N/A';
+        })
+        .catch(error => {
+          alert("Failed to fetch user details: " + error.message);
+          window.location.href = "login.html";
+        });
+    }
+  </script>
+
+</body>
+</html>
